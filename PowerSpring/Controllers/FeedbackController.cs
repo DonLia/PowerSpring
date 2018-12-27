@@ -19,6 +19,7 @@ namespace PowerSpring.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            ViewBag.Title = "FeedBack";
             return View();
         }
 
