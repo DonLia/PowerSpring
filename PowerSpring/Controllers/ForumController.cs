@@ -14,5 +14,12 @@ namespace PowerSpring.Controllers
         {
             return View();
         }
+
+        public IActionResult NewPost()
+        {
+            return View();
+        }
+
+
     }
 }

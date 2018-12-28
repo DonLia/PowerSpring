@@ -17,10 +17,10 @@ namespace PowerSpring.Models
                 .CreateScope())
             {
                 AppDbContext context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-                if (!context.Categories.Any())
-                {
-                    context.Categories.AddRange(Categories.Select(c => c.Value));
-                }
+                //if (!context.Threads.Any())
+                //{
+                //    context.Threads.AddRange(Categories.Select(c => c.Value));
+                //}
 
                 if (!context.Pies.Any())
                 {

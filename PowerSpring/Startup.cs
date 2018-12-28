@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PowerSpring.Helper;
+using PowerSpring.Models.Forum;
 
 namespace PowerSpring
 {
@@ -55,6 +56,8 @@ namespace PowerSpring
             //services.AddTransient<IPieRepository, MockPieRepository>();
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddTransient<IFeedbackRepository, FeedbackRepository>();
+            services.AddTransient<IThreadRepository, ThreadRepository>();
+            services.AddTransient<IReplyRepository, ReplyRepository>();
 
             services.AddMvc();
         }

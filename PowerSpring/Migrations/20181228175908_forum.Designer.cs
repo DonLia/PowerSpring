@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181227012654_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20181228175908_forum")]
+    partial class forum
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,56 @@ namespace PowerSpring.Migrations
                     b.HasKey("FeedbackId");
 
                     b.ToTable("Feedbacks");
+                });
+
+            modelBuilder.Entity("PowerSpring.Models.Forum.BBSReply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000);
+
+                    b.Property<bool>("IsBlocked");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("ParentThreadId");
+
+                    b.Property<int>("RespondentId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BBSReplies");
+                });
+
+            modelBuilder.Entity("PowerSpring.Models.Forum.BBSThread", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000);
+
+                    b.Property<int>("GroupId");
+
+                    b.Property<bool>("IsBlocked");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("PosterId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BBSThreads");
                 });
 
             modelBuilder.Entity("PowerSpring.Models.Pie", b =>
