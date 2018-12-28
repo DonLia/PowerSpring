@@ -1,7 +1,5 @@
 ﻿
 @using Microsoft.AspNetCore.Identity
-
-
 <!DOCTYPE html>
 
 <html>
@@ -16,12 +14,26 @@
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+
                     <li><a asp-controller="Home" asp-action="Index" class="navbar-brand">Bethany's Pie Shop</a></li>
                     <li><a asp-controller="Feedback" asp-action="Index">Feedback</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-controller="Account" asp-action="Index">Account</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><a asp-controller="Admin" asp-action="Index">Admin</a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login">Account</a></li>
+                    }
                 </ul>
 
-               @* @if (SignInManager.IsSignedIn(User))*@
+                @if (User.Identity.IsAuthenticated)
                 {
+
                     <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
                           method="post" class="navbar-right">
                         <ul class="nav navbar-nav navbar-right">
@@ -29,13 +41,13 @@
                         </ul>
                     </form>
                 }
-                @*else
+                else
                 {
                     <ul class="nav navbar-nav navbar-right">
                         <li><a id="registerLink" asp-controller="Account" asp-action="Register">Register</a></li>
                         <li><a id="loginLink" asp-controller="Account" asp-action="Login">Log in</a></li>
                     </ul>
-                }*@
+                }
             </div>
         </div>
     </nav>

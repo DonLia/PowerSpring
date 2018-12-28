@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace PowerSpring.Models
 {
-   // public class AppDbContext: IdentityDbContext<IdentityUser>
-    public class AppDbContext: DbContext
+    // public class AppDbContext: IdentityDbContext<IdentityUser>
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -17,9 +17,6 @@ namespace PowerSpring.Models
         }
 
         public DbSet<WebUser> WebUsers { get; set; }
-        public DbSet<Pie> Pies { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
-
     }
+
 }

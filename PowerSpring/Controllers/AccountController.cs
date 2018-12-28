@@ -29,6 +29,11 @@ namespace PowerSpring.Controllers
             return View();
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -44,7 +49,8 @@ namespace PowerSpring.Controllers
             ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-            return View(loginViewModel);
+            return RedirectToAction("Index", "Account");
+
         }
 
         public IActionResult Register()
@@ -62,7 +68,7 @@ namespace PowerSpring.Controllers
 
                 if (result!=null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Account");
                 }
             }            
             return View(loginViewModel);
@@ -83,7 +89,7 @@ namespace PowerSpring.Controllers
             List<Claim> claims = new List<Claim>();
 
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName.ToString()));
-            claims.Add(new Claim(ClaimTypes.Role, user.UserName.ToString()));
+            claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
             return claims;
         }
 
@@ -93,7 +99,7 @@ namespace PowerSpring.Controllers
             //wait _signInManager.SignOutAsync();
             //await httpContext.SignOutAsync();
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

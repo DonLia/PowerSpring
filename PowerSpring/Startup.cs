@@ -51,10 +51,6 @@ namespace PowerSpring
 
             services.AddScoped<IUserManager, UserManager>();
             services.AddDistributedMemoryCache();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            //services.AddTransient<IPieRepository, MockPieRepository>();
-            services.AddTransient<IPieRepository, PieRepository>();
-            services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 
             services.AddMvc();
         }
@@ -73,10 +69,9 @@ namespace PowerSpring
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Account}/{action=Login}");
             });
-
-            DbInitializer.Seed(app);
+            
         }
     }
 }
