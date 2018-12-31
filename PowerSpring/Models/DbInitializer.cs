@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using PowerSpring.Models.Forum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,14 @@ namespace PowerSpring.Models
                     );
                 }
 
+                if (!context.BBSThreads.Any())
+                {
+                    context.AddRange(
+                        new BBSThread { Title = "Welcome!", Content = "Welcome to Power Spring.", GroupId = 0, PosterId = 1, IsBlocked =false, IsDeleted = false},
+                        new BBSThread { Title = "First Thread", Content = "This is acturally the first thread for the furum.", GroupId = 0, PosterId = 1, IsBlocked = false, IsDeleted = false }
+                    );
+                }
+
                 context.SaveChanges();
             }
         }
@@ -69,5 +78,8 @@ namespace PowerSpring.Models
                 return categories;
             }
         }
+
+
+
     }
 }

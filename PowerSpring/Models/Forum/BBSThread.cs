@@ -21,13 +21,13 @@ namespace PowerSpring.Models.Forum
         [StringLength(2000, ErrorMessage = "Your comment is required")]
         public string Content { get; set; }
 
-        public int GroupId { get; set; }
-        public int PosterId { get; set; }
+        public int GroupId { get; set; } 
+        public int PosterId { get; set; } 
 
         //public List<BBSReply> Replies { get; set; }
 
 
-        public bool IsBlocked { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsBlocked { get; set; } 
+        public bool IsDeleted { get; set; } 
     }
 }

@@ -8,5 +8,8 @@ namespace PowerSpring.Models.Forum
     public interface IThreadRepository
     {
         IEnumerable<BBSThread> BBSThreads { get; }
+
+        void AddThread(BBSThread bbsThread);
     }
+
 }

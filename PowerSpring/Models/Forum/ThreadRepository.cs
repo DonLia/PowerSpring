@@ -13,6 +13,19 @@ namespace PowerSpring.Models.Forum
         {
             _appDbContext = appDbContext;
         }
-        public IEnumerable<BBSThread> BBSThreads => _appDbContext.BBSThreads;
+
+        public IEnumerable<BBSThread> BBSThreads
+        {
+            get
+            {
+                return _appDbContext.BBSThreads;
+            }
+        }
+
+        public void AddThread(BBSThread bbsThread)
+        {
+            _appDbContext.BBSThreads.Add(bbsThread);
+            _appDbContext.SaveChanges(); ;
+        }
     }
 }

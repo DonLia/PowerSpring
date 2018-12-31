@@ -1,4 +1,6 @@
 ﻿
+@model ThreadViewModel
+
 @{
     ViewData["Title"] = "PowerSpring BBS";
 }
@@ -7,22 +9,24 @@
 <div class="form-group">
     <div class="col-md-5">
         <a asp-controller="Forum" asp-action="NewPost"><input type="button" class="btn btn-primary" value="Start New Post" /></a>
-        
+
     </div>
 </div>
 
-
-<div class="col-sm-12 col-lg-12 col-md-12">
+@foreach (var bbsThread in Model.BBSThreads)
+{
+    <div class="col-sm-12 col-lg-12 col-md-12">
 
     <div>
-        <h3 class="push-right">This is a comment title</h3>
+        <h3 class="push-right" >@bbsThread.Title</h3>
         <p>
-            This is a comment
+            @bbsThread.Content
         </p>
-        <div>
-            <p>this should be a reply</p>
+        <div class="col-md-offset-5 col-md-5">
+            <a asp-controller="Reply" asp-action="NewReply" asp-route-id=@bbsThread.Id><input type="button" class="btn btn-primary" value="Reply" /></a>
         </div>
 
     </div>
 
 </div>
+}
