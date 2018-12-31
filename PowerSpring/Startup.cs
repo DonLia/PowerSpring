@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PowerSpring.Helper;
+using PowerSpring.Models.Forum;
 
 namespace PowerSpring
 {
@@ -29,7 +30,7 @@ namespace PowerSpring
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-              //  options.UseSqlServer("Server=.\\SQLExpress;Database=PowerSpring;Trusted_Connection=True;MultipleActiveResultSets=true"));
+            //  options.UseSqlServer("Server=.\\SQLExpress;Database=PowerSpring;Trusted_Connection=True;MultipleActiveResultSets=true"));
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
@@ -52,9 +53,10 @@ namespace PowerSpring
             services.AddScoped<IUserManager, UserManager>();
             services.AddDistributedMemoryCache();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
-            //services.AddTransient<IPieRepository, MockPieRepository>();
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddTransient<IFeedbackRepository, FeedbackRepository>();
+            services.AddTransient<IThreadRepository, ThreadRepository>();
+            services.AddTransient<IReplyRepository, ReplyRepository>();
 
             services.AddMvc();
         }

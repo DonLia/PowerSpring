@@ -20,14 +20,14 @@ namespace PowerSpring.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Title = "Pie overview";
+            ViewBag.Title = "Power Spring";
 
             var pies = _pieRepository.Pies.OrderBy(p => p.Name);
 
             var homeViewModel = new HomeViewModel()
             {
                 Pies = pies.ToList(),
-                Title = "Welcome to Bethany's Pie Shop"
+                Title = "Welcome to Power Spring - 欢迎来到福源团契"
             };
 
             return View(homeViewModel);

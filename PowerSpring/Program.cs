@@ -16,25 +16,6 @@ namespace PowerSpring
     {
         public static void Main(string[] args)
         {
-            /*
-            var host = CreateWebHostBuilder(args).Build();
-
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<AppDbContext>();
-                    DbInitializer.Seed(context);
-                }
-                catch (Exception)
-                {
-                    //we could log this in a real-world situation
-                }
-            }
-
-            host.Run();
-            */
             CreateWebHostBuilder(args).Build().Run();
         }
 
