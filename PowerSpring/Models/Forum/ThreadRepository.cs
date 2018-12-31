@@ -27,5 +27,10 @@ namespace PowerSpring.Models.Forum
             _appDbContext.BBSThreads.Add(bbsThread);
             _appDbContext.SaveChanges(); ;
         }
+
+        public BBSThread GetThreadById(int threadId)
+        {
+            return _appDbContext.BBSThreads.FirstOrDefault(th => th.Id ==threadId);
+        }
     }
 }
