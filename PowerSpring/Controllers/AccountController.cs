@@ -57,6 +57,9 @@ namespace PowerSpring.Controllers
         {
             return View(new LoginViewModel());
         }
+        public IActionResult RegisterSuccess() {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Register(LoginViewModel loginViewModel)
@@ -68,7 +71,7 @@ namespace PowerSpring.Controllers
 
                 if (result!=null)
                 {
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction("RegisterSuccess", "Account");
                 }
             }            
             return View(loginViewModel);
