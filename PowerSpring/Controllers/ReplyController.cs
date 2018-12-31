@@ -19,7 +19,7 @@ namespace PowerSpring.Controllers
         public IActionResult NewReply(int bbsThreadId)
         {
             BBSThread bBSThread = new BBSThread();
-            bBSThread
+            //bBSThread
             return View();
         }
     }
