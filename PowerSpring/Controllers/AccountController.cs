@@ -87,9 +87,11 @@ namespace PowerSpring.Controllers
         private IEnumerable<Claim> GetUserRoleClaims(WebUser user)
         {
             List<Claim> claims = new List<Claim>();
-
+            var Role = "User";
+            if (user.IsAdmin)
+                Role = "Admin";
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName.ToString()));
-            claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
+            claims.Add(new Claim(ClaimTypes.Role, Role));
             return claims;
         }
 

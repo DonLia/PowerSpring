@@ -151,6 +151,8 @@ namespace PowerSpring.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<bool>("IsAdmin");
+
                     b.Property<byte[]>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");
