@@ -57,7 +57,7 @@ namespace PowerSpring
             services.AddTransient<IFeedbackRepository, FeedbackRepository>();
             services.AddTransient<IThreadRepository, ThreadRepository>();
             services.AddTransient<IReplyRepository, ReplyRepository>();
-
+            services.AddTransient<INewsRepository, NewsRepository>();
             services.AddMvc();
         }
 

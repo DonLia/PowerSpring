@@ -108,6 +108,29 @@ namespace PowerSpring.Migrations
                     b.ToTable("BBSThreads");
                 });
 
+            modelBuilder.Entity("PowerSpring.Models.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Date");
+
+                    b.Property<string>("LongDescription");
+
+                    b.Property<string>("NewsTitle");
+
+                    b.Property<string>("ShortDescription");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
             modelBuilder.Entity("PowerSpring.Models.Pie", b =>
                 {
                     b.Property<int>("PieId")
