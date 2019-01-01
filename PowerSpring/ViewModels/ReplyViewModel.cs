@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace PowerSpring.ViewModels
 {
-    public class ThreadViewModel
+    public class ReplyViewModel
     {
-        public List<BBSThread> BBSThreads { get; set; }
+        public BBSThread bbsThread { get; set; }
+        public BBSReply bbsReply { get; set; }
     }
 }

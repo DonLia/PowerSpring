@@ -8,5 +8,6 @@ namespace PowerSpring.Models.Forum
     public interface IReplyRepository
     {
         IEnumerable<BBSReply> BBSReplies { get; }
+        void AddReply(BBSReply bbsReply);
     }
 }

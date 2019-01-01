@@ -10,6 +10,7 @@ namespace PowerSpring.Models.Forum
         IEnumerable<BBSThread> BBSThreads { get; }
 
         void AddThread(BBSThread bbsThread);
+        BBSThread GetThreadById(int bbsThreadId);
     }
 
 }

@@ -18,10 +18,10 @@ namespace PowerSpring.Models
                 .CreateScope())
             {
                 AppDbContext context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-                //if (!context.Threads.Any())
-                //{
-                //    context.Threads.AddRange(Categories.Select(c => c.Value));
-                //}
+                if (!context.Categories.Any())
+                {
+                    context.Categories.AddRange(Categories.Select(c => c.Value));
+                }
 
                 if (!context.Pies.Any())
                 {
@@ -44,8 +44,18 @@ namespace PowerSpring.Models
                 if (!context.BBSThreads.Any())
                 {
                     context.AddRange(
-                        new BBSThread { Title = "Welcome!", Content = "Welcome to Power Spring.", GroupId = 0, PosterId = 1, IsBlocked =false, IsDeleted = false},
-                        new BBSThread { Title = "First Thread", Content = "This is acturally the first thread for the furum.", GroupId = 0, PosterId = 1, IsBlocked = false, IsDeleted = false }
+                        new BBSThread { Title = "Welcome!", Content = "Welcome to Power Spring.", GroupId = 0, UserId = 1, IsBlocked =false, IsDeleted = false},
+                        new BBSThread { Title = "First Thread", Content = "This is acturally the first thread for the furum.", GroupId = 0, UserId = 1, IsBlocked = false, IsDeleted = false }
+                    );
+                }
+
+                context.SaveChanges();
+
+                if (!context.BBSReplies.Any())
+                {
+                    context.AddRange(
+                        new BBSReply { Content = "This is the reply of the first Post", ParentThreadId = 1, UserId = 1, IsBlocked = false, IsDeleted = false },
+                        new BBSReply { Content = "This is the reply of the 2nd Post", ParentThreadId = 2, UserId = 1, IsBlocked = false, IsDeleted = false }
                     );
                 }
 

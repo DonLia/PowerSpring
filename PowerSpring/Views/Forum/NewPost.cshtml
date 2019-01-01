@@ -1,13 +1,11 @@
 ﻿@using PowerSpring.Models.Forum
 @model BBSThread
 
-<h2>This is the page taking new post</h2>
-
 <form asp-action="Index" method="post" class="form-horizontal" role="form">
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label"></label>
         <div class="col-md-5">
-            <input type="text" asp-for="Title" class="form-control" />
+            <input type="text" asp-for="Title" class="form-control" >
         </div>
     </div>
 
@@ -20,7 +18,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-5">
-            <input type="submit" class="btn btn-primary" value="Post" />
+            <input type="submit" class="btn btn-primary" value="Post Reply">
         </div>
     </div>
 
