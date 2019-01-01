@@ -23,5 +23,7 @@ namespace PowerSpring.Models
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<BBSThread> BBSThreads { get; set; }
         public DbSet<BBSReply> BBSReplies { get; set; }
+        public DbSet<News> News { get; set; }
+
     }
 }

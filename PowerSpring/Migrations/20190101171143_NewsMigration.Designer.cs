@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181231234420_Initialize")]
-    partial class Initialize
+    [Migration("20190101171143_NewsMigration")]
+    partial class NewsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,6 +108,29 @@ namespace PowerSpring.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BBSThreads");
+                });
+
+            modelBuilder.Entity("PowerSpring.Models.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Date");
+
+                    b.Property<string>("LongDescription");
+
+                    b.Property<string>("NewsTitle");
+
+                    b.Property<string>("ShortDescription");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("PowerSpring.Models.Pie", b =>
