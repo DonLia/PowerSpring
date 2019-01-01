@@ -21,8 +21,8 @@ namespace PowerSpring.Models
         public DbSet<Pie> Pies { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<BBSThread> BBSThreads { get; set; }
-        public DbSet<BBSReply> BBSReplies { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Reply> Replies { get; set; }
         public DbSet<News> News { get; set; }
 
     }

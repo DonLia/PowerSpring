@@ -13,29 +13,29 @@
     </div>
 </div>
 
-@foreach (var bbsThread in Model.BBSThreads)
+@foreach (var post in Model.Posts)
 {
     <div class="col-sm-12 col-lg-12 col-md-12">
 
         <div>
-            <h3 class="push-right">@bbsThread.Title</h3>
+            <h3 class="push-right">@post.Title</h3>
             <h3>@User.Identity.Name </h3>
             <p>
 
-                @bbsThread.Content
+                @post.Content
             </p>
-            @foreach (var bbsReply in Model.BBSReplies)
+            @foreach (var reply in Model.Replies)
             {
-                @if (bbsReply.ParentThreadId == bbsThread.Id)
+                @if (reply.ParentId == post.Id)
                 {
                     <div class="col-md-offset-1">
                         <p>
-                            @bbsReply.Content
+                            @reply.Content
                         </p>
                         @if (User.IsInRole("Admin"))
                         {
 
-                            <a asp-controller="Forum" asp-action="Delete" asp-route-id="@bbsThread.Id"><input type="button" class="btn btn-primary" value="Delete"></a>
+                            <a asp-controller="Forum" asp-action="Delete" asp-route-id="@post.Id"><input type="button" class="btn btn-primary" value="Delete"></a>
                         }
                     </div>
                 }
@@ -43,7 +43,7 @@
 
 
             <div class="col-md-offset-5 col-md-5">
-                <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@bbsThread.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
+                <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
             </div>
 
         </div>

@@ -14,17 +14,17 @@ namespace PowerSpring.Models.Forum
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<BBSReply> BBSReplies
+        public IEnumerable<Reply> BBSReplies
         {
             get
             {
-                return _appDbContext.BBSReplies;
+                return _appDbContext.Replies;
             }
         }
 
-        public void AddReply(BBSReply bbsReply)
+        public void AddReply(Reply bbsReply)
         {
-            _appDbContext.BBSReplies.Add(bbsReply);
+            _appDbContext.Replies.Add(bbsReply);
             _appDbContext.SaveChanges(); ;
         }
     }

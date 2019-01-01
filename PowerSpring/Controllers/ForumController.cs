@@ -14,9 +14,9 @@ namespace PowerSpring.Controllers
     public class ForumController : Controller
     {
         private readonly IReplyRepository _replyRepository;
-        private readonly IThreadRepository _threadRepository;
+        private readonly IPostRepository _threadRepository;
 
-        public ForumController(IReplyRepository replyRepository, IThreadRepository threadRepository)
+        public ForumController(IReplyRepository replyRepository, IPostRepository threadRepository)
         {
             _replyRepository = replyRepository;
             _threadRepository = threadRepository;
@@ -25,12 +25,12 @@ namespace PowerSpring.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            var bBSThreads = _threadRepository.BBSThreads.OrderBy(t => t.Id);
+            var bBSThreads = _threadRepository.Posts.OrderBy(t => t.Id);
             var bBSReplies = _replyRepository.BBSReplies;
             ForumViewModel forumViewModel = new ForumViewModel
             {
-                BBSThreads = bBSThreads.ToList(),
-                BBSReplies = bBSReplies.ToList()
+                Posts = bBSThreads.ToList(),
+                Replies = bBSReplies.ToList()
             };
             return View(forumViewModel);
         }
@@ -71,24 +71,24 @@ namespace PowerSpring.Controllers
         //}
 
         [HttpPost]
-        public IActionResult Index(BBSThread bbsThread)
+        public IActionResult Index(Post post)
         {
             if (ModelState.IsValid)
             {
-                _threadRepository.AddThread(bbsThread);
+                _threadRepository.AddThread(post);
                 return RedirectToAction("PostComplete");
             }
-            return View(bbsThread);
+            return View(post);
         }
 
         [HttpPost]
-        public IActionResult NewReply(BBSReply bbsReply, int id)
+        public IActionResult NewReply(Reply reply, int id)
         {
             if (ModelState.IsValid)
             {
-                bbsReply.ParentThreadId = id;
-                bbsReply.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                _replyRepository.AddReply(bbsReply);
+                reply.ParentId = id;
+                reply.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                _replyRepository.AddReply(reply);
                 return RedirectToAction("PostComplete");
             }
             return View();
