@@ -66,7 +66,6 @@ namespace PowerSpring.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasMaxLength(2000);
 
                     b.Property<bool>("IsBlocked");
@@ -75,7 +74,7 @@ namespace PowerSpring.Migrations
 
                     b.Property<int>("ParentThreadId");
 
-                    b.Property<int>("RespondentId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -98,11 +97,11 @@ namespace PowerSpring.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("PosterId");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100);
+
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 

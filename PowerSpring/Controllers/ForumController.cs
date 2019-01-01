@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PowerSpring.Models.Forum;
 using PowerSpring.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace PowerSpring.Controllers
 {
@@ -20,7 +22,7 @@ namespace PowerSpring.Controllers
             _threadRepository = threadRepository;
         }
 
-        // [Authorize]
+        [Authorize]
         public IActionResult Index()
         {
             var bBSThreads = _threadRepository.BBSThreads.OrderBy(t => t.Id);
@@ -80,17 +82,22 @@ namespace PowerSpring.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewReply(BBSReply bbsReply,int id)
+        public IActionResult NewReply(BBSReply bbsReply, int id)
         {
             if (ModelState.IsValid)
             {
                 bbsReply.ParentThreadId = id;
+                bbsReply.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 _replyRepository.AddReply(bbsReply);
                 return RedirectToAction("PostComplete");
             }
             return View();
         }
+        public IActionResult Delete() {
 
+
+            return View();
+        }
         public IActionResult PostComplete()
         {
             return View();

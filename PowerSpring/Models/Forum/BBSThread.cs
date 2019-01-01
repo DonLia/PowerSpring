@@ -22,7 +22,7 @@ namespace PowerSpring.Models.Forum
         public string Content { get; set; }
 
         public int GroupId { get; set; } 
-        public int PosterId { get; set; } 
+        public int UserId { get; set; } 
 
         //public List<BBSReply> Replies { get; set; }
 

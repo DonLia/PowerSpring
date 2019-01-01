@@ -14,9 +14,9 @@ namespace PowerSpring.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(maxLength: 2000, nullable: false),
+                    Content = table.Column<string>(maxLength: 2000, nullable: true),
                     ParentThreadId = table.Column<int>(nullable: false),
-                    RespondentId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     IsBlocked = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -34,7 +34,7 @@ namespace PowerSpring.Migrations
                     Title = table.Column<string>(maxLength: 100, nullable: false),
                     Content = table.Column<string>(maxLength: 2000, nullable: false),
                     GroupId = table.Column<int>(nullable: false),
-                    PosterId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     IsBlocked = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },

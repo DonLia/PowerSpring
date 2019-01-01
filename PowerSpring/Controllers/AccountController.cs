@@ -19,7 +19,7 @@ namespace PowerSpring.Controllers
     {
         private IUserManager _userManager;
 
-        public AccountController( IUserManager userManager)
+        public AccountController(IUserManager userManager)
         {
             _userManager = userManager;
         }
@@ -40,11 +40,12 @@ namespace PowerSpring.Controllers
             if (!ModelState.IsValid)
                 return View(loginViewModel);
 
-            var user =  _userManager.Authenticate(loginViewModel.UserName,loginViewModel.Password);
+            var user = _userManager.Authenticate(loginViewModel.UserName, loginViewModel.Password);
 
             if (user == null)
             {
                 ModelState.AddModelError("", "User name/password not found");
+                return View(loginViewModel);
             }
             ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
@@ -57,7 +58,8 @@ namespace PowerSpring.Controllers
         {
             return View(new LoginViewModel());
         }
-        public IActionResult RegisterSuccess() {
+        public IActionResult RegisterSuccess()
+        {
             return View();
         }
 
@@ -67,13 +69,13 @@ namespace PowerSpring.Controllers
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser() { UserName = loginViewModel.UserName };
-                var result =  _userManager.Create(loginViewModel.UserName, loginViewModel.Password);
+                var result = _userManager.Create(loginViewModel.UserName, loginViewModel.Password);
 
-                if (result!=null)
+                if (result != null)
                 {
                     return RedirectToAction("RegisterSuccess", "Account");
                 }
-            }            
+            }
             return View(loginViewModel);
         }
         private IEnumerable<Claim> GetUserClaims(WebUser user)
@@ -82,7 +84,7 @@ namespace PowerSpring.Controllers
 
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-           // claims.Add(new Claim(ClaimTypes.Email, user.Email));
+            // claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.AddRange(this.GetUserRoleClaims(user));
             return claims;
         }
@@ -93,7 +95,7 @@ namespace PowerSpring.Controllers
             var Role = "User";
             if (user.IsAdmin)
                 Role = "Admin";
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName.ToString()));
+            //claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName.ToString()));
             claims.Add(new Claim(ClaimTypes.Role, Role));
             return claims;
         }

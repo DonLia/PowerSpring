@@ -18,7 +18,7 @@ namespace PowerSpring.Models.Forum
 
         public int ParentThreadId { get; set; }
 
-        public int RespondentId { get; set; }
+        public int UserId { get; set; }
         public bool IsBlocked { get; set; }
         public bool IsDeleted { get; set; }
     }
