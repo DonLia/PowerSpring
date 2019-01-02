@@ -24,6 +24,11 @@ namespace PowerSpring.Models
             return _appDbContext.News.FirstOrDefault(p => p.Id == NewsId);
 
         }
+        public void AddNews(News news)
+        {
+            _appDbContext.News.Add(news);
+            _appDbContext.SaveChanges();
+        }
 
     }
 }

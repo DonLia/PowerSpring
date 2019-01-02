@@ -9,5 +9,6 @@ namespace PowerSpring.Models
     {
         IEnumerable<News> GetAllNews();
         News GetNewsById(int NewsId);
+        void AddNews(News news);
     }
 }

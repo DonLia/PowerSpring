@@ -13,11 +13,12 @@
             <div class="caption">
                 <h3 class="pull-right">@news.Date</h3>
                 <h3>
-                    <a asp-controller="Home" asp-action="Details" asp-route-id="@news.Id">@news.NewsTitle</a>
+                    <a asp-controller="News" asp-action="Details" asp-route-id="@news.Id">@news.NewsTitle</a>
                 </h3>
                 <p>@news.ShortDescription</p>
             </div>
         @*</div>*@
+        @*//*@
     </div>
 }
 
