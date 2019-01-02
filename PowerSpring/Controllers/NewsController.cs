@@ -45,6 +45,7 @@ namespace News.Controllers
             return View();
         }
         //Process Input 
+        [HttpPost]
         public IActionResult ProcessInPut(NewsInPut newsInPut)
         {
             if (ModelState.IsValid)
@@ -58,12 +59,23 @@ namespace News.Controllers
                 news.Content = newsInPut.Content;
 
                 _newsRepository.AddNews(news);
+                
                 return RedirectToAction("NewsInputComplete");
             }
             return View();
         }
 
         public IActionResult NewsInputComplete()
+        {
+            return View();
+        }
+        public IActionResult BlockNewsById(int id)
+        {
+            _newsRepository.BlockNewsById(id);
+
+            return RedirectToAction("DeleteComplete");
+        }
+        public IActionResult DeleteComplete()
         {
             return View();
         }
