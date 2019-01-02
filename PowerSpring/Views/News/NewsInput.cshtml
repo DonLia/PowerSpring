@@ -1,0 +1,25 @@
+﻿@using PowerSpring.Models
+@model NewsInPut
+
+<form asp-action="ProcessInPut" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label asp-for="NewsTitle" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input type="text" asp-for="NewsTitle" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Content" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <textarea asp-for="Content" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Post Reply">
+        </div>
+    </div>
+
+</form>
