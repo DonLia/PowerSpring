@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerSpring.Models.Forum
 {
-    public class BBSThread
+    public class Post
     {   [BindNever]
         public int Id { get; set; }
 
@@ -22,7 +22,9 @@ namespace PowerSpring.Models.Forum
         public string Content { get; set; }
 
         public int GroupId { get; set; } 
-        public int UserId { get; set; } 
+        public int UserId { get; set; }
+
+        public string Time { get; set; }
 
         //public List<BBSReply> Replies { get; set; }
 
