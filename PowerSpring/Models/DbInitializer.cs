@@ -66,7 +66,7 @@ namespace PowerSpring.Models
 
                     context.AddRange
                   (
-                       new News { NewsTitle = "Apple", UserId = 1, Content = "1", Date = "12/28/2018", LongDescription = "this is good", ShortDescription = "hi" }
+                       //new News { NewsTitle = "Apple", UserId = 1, Content = "1", Date = "12/28/2018", LongDescription = "this is good", ShortDescription = "hi" }
                   );
 
                 }
