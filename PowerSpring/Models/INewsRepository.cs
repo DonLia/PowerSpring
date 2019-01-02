@@ -10,5 +10,7 @@ namespace PowerSpring.Models
         IEnumerable<News> GetAllNews();
         News GetNewsById(int NewsId);
         void AddNews(News news);
+        void DeleteNews(News news);
+        void BlockNewsById(int Id);
     }
 }

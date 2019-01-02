@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PowerSpring.Models;
 
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190102165803_UpdateMirgration")]
+    partial class UpdateMirgration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,10 +123,6 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Content");
 
                     b.Property<string>("Date");
-
-                    b.Property<bool>("IsBlocked");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LongDescription");
 
