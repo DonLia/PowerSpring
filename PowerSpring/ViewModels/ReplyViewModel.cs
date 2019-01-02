@@ -8,7 +8,7 @@ namespace PowerSpring.ViewModels
 {
     public class ReplyViewModel
     {
-        public BBSThread bbsThread { get; set; }
-        public BBSReply bbsReply { get; set; }
+        public Post post { get; set; }
+        public Reply reply { get; set; }
     }
 }
