@@ -10,7 +10,7 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190101034827_Initialize")]
+    [Migration("20181231234420_Initialize")]
     partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
