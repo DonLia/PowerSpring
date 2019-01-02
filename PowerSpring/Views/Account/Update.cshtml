@@ -1,0 +1,35 @@
+﻿@model UpdateViewModel
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Update" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Please Verify your Password :</label>
+        <div class="col-md-5">
+            <input type="password" asp-for="VerifyPassword" class="form-control">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Enter your New @Model.UpdateInfo :</label>
+        <div class="col-md-5">
+            <input type=@Model.InputType asp-for="UpdateInfoValue" class="form-control">
+        </div>
+    </div>
+    @if (Model.UpdateInfo == "Password")
+    {
+        <div class="form-group">
+            <label class="col-md-2 control-label">Please verify your new password:</label>
+            <div class="col-md-5">
+                <input type="password" asp-for="VerifyUpdateInfoValue" class="form-control">
+            </div>
+        </div>
+
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </div>
+    </div>
+
+</form>
