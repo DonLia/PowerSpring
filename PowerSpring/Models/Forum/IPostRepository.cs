@@ -14,6 +14,7 @@ namespace PowerSpring.Models.Forum
         void DeletePostById(int postId);
         void BlockPostById(int postId);
         void UbBlockPostById(int postId);
+        void UnDeletePostById(int postId);
     }
 
 }

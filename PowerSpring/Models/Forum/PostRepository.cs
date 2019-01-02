@@ -50,5 +50,11 @@ namespace PowerSpring.Models.Forum
             _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).IsBlocked = false;
             _appDbContext.SaveChanges();
         }
+
+        public void UnDeletePostById(int postId)
+        {
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).IsDeleted = false;
+            _appDbContext.SaveChanges();
+        }
     }
 }

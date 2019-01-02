@@ -10,6 +10,7 @@ namespace PowerSpring.Models.Forum
         IEnumerable<Reply> Replies { get; }
         void AddReply(Reply reply);
         Reply GetReplyById(int replyId);
+        List<Reply> GetRepliesByParentId(int parentId);
         void DeleteReplyById(int replyId);
     }
 }

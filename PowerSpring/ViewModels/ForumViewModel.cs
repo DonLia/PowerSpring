@@ -9,6 +9,7 @@ namespace PowerSpring.ViewModels
     public class ForumViewModel
     {
         public List<Post> Posts { get; set; }
+        public Post post { get; set; }
         public List<Reply> Replies { get; set; }
     }
 }
