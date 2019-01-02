@@ -88,6 +88,8 @@ namespace PowerSpring.Controllers
                         _userManager.Update(user, updateViewModel.UpdateInfoValue);
                     else {
                         ModelState.AddModelError("", "Your new password does not match");
+                        updateViewModel.VerifyUpdateInfoValue = null;
+                        updateViewModel.UpdateInfoValue = null;
                         return View(updateViewModel);
                     }
                     break;
