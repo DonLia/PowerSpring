@@ -4,45 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PowerSpring.Migrations
 {
-    public partial class NewsMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "BBSReplies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(maxLength: 2000, nullable: true),
-                    ParentThreadId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    IsBlocked = table.Column<bool>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BBSReplies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BBSThreads",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(maxLength: 100, nullable: false),
-                    Content = table.Column<string>(maxLength: 2000, nullable: false),
-                    GroupId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    IsBlocked = table.Column<bool>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BBSThreads", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -89,6 +54,43 @@ namespace PowerSpring.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_News", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Content = table.Column<string>(maxLength: 2000, nullable: false),
+                    GroupId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Time = table.Column<string>(nullable: true),
+                    IsBlocked = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Replies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Content = table.Column<string>(maxLength: 2000, nullable: true),
+                    ParentId = table.Column<int>(nullable: false),
+                    Time = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    IsBlocked = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Replies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -146,12 +148,6 @@ namespace PowerSpring.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BBSReplies");
-
-            migrationBuilder.DropTable(
-                name: "BBSThreads");
-
-            migrationBuilder.DropTable(
                 name: "Feedbacks");
 
             migrationBuilder.DropTable(
@@ -159,6 +155,12 @@ namespace PowerSpring.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pies");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "Replies");
 
             migrationBuilder.DropTable(
                 name: "WebUsers");

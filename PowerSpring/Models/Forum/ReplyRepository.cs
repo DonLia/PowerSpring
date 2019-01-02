@@ -14,18 +14,47 @@ namespace PowerSpring.Models.Forum
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<BBSReply> BBSReplies
+        public IEnumerable<Reply> Replies
         {
             get
             {
-                return _appDbContext.BBSReplies;
+                return _appDbContext.Replies;
             }
         }
 
-        public void AddReply(BBSReply bbsReply)
+        public void AddReply(Reply reply)
         {
-            _appDbContext.BBSReplies.Add(bbsReply);
-            _appDbContext.SaveChanges(); ;
+            _appDbContext.Replies.Add(reply);
+            _appDbContext.SaveChanges(); 
+        }
+
+        public void DeleteReplyById(int replyId)
+        {
+            _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId).IsDeleted = true;
+            _appDbContext.SaveChanges();
+        }
+
+        public List<Reply> GetRepliesByParentId(int parentId)
+        {
+            List<Reply> replyList = new List<Reply>();
+            
+            
+            foreach(var reply in _appDbContext.Replies)
+            {
+                if (reply.ParentId == parentId)
+                {
+                    replyList.Add(reply);
+                }
+            }
+
+            return replyList;
+
+        }
+
+        public Reply GetReplyById(int replyId)
+        {
+            return _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId);
         }
     }
 }
+

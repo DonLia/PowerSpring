@@ -1,11 +1,11 @@
-﻿@using PowerSpring.Models.Forum
-@model Post
+﻿@using PowerSpring.Models
+@model NewsInPut
 
-<form asp-action="Index" method="post" class="form-horizontal" role="form">
+<form asp-action="ProcessInPut" method="post" class="form-horizontal" role="form">
     <div class="form-group">
-        <label asp-for="Title" class="col-md-2 control-label"></label>
+        <label asp-for="NewsTitle" class="col-md-2 control-label"></label>
         <div class="col-md-5">
-            <input type="text" asp-for="Title" class="form-control" >
+            <input type="text" asp-for="NewsTitle" class="form-control">
         </div>
     </div>
 

@@ -4,48 +4,73 @@
 @{
     ViewData["Title"] = "PowerSpring BBS";
 }
-
+<asp:Label ID="CurrentTime" runat="server" />
+<div id="wrapper">
+    <h3>Current User: @User.Identity.Name</h3>
+</div>
+@*Start New Post Button*@
 <div class="form-group">
     <div class="col-md-5">
         <a asp-controller="Forum" asp-action="NewPost"><input type="button" class="btn btn-primary" value="Start New Post"></a>
-
     </div>
 </div>
 
-@foreach (var bbsThread in Model.BBSThreads)
-{
-    <div class="col-sm-12 col-lg-12 col-md-12">
-
-        <div>
-            <h3 class="push-right">@bbsThread.Title</h3>
-            <h3>@User.Identity.Name </h3>
-            <p>
-
-                @bbsThread.Content
-            </p>
-            @foreach (var bbsReply in Model.BBSReplies)
-            {
-                @if (bbsReply.ParentThreadId == bbsThread.Id)
+@*Display All Undeleted Posts*@
+<table style="width:80%">
+    <tr>
+        <th>Post Title</th>
+        <th>Poster Id</th>
+        <th>Post Time</th>
+        @if (User.IsInRole("Admin"))
+        {
+            <th>DELETE POST</th>
+            <th>BLOCK REPLY</th>
+        }
+    </tr>
+    @foreach (var post in Model.Posts)
+    {
+        @if (!post.IsDeleted)
+        {
+            <tr>
+                <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a> </td>
+                <td> @post.UserId</td>
+                <td> @post.Time</td>
+                @if (User.IsInRole("Admin"))
                 {
-                    <div class="col-md-offset-1">
-                        <p>
-                            @bbsReply.Content
-                        </p>
-                        @if (User.IsInRole("Admin"))
-                        {
-
-                            <a asp-controller="Forum" asp-action="Delete" asp-route-id="@bbsThread.Id"><input type="button" class="btn btn-primary" value="Delete"></a>
-                        }
-                    </div>
+                    <td>
+                        <a asp-controller="Forum" asp-action="DeletePost" asp-route-id="@post.Id">Delete</a>
+                    </td>
+                    @if (!post.IsBlocked)
+                    {
+                        <td>
+                            <a asp-controller="Forum" asp-action="BlockPost" asp-route-id="@post.Id">Block</a>
+                        </td>
+                    }
+                    @if (post.IsBlocked)
+                    {
+                        <td>
+                            <a asp-controller="Forum" asp-action="UnBlockPost" asp-route-id="@post.Id">UnBlock</a>
+                        </td>
+                    }
                 }
+            </tr>
+        }
+        else
+        {
+            @if (User.IsInRole("Admin"))
+            {
+                <tr>
+                    <td> @post.Title</td>
+                    <td> @post.UserId</td>
+                    <td> @post.Time</td>
+                    <td>
+                        <a asp-controller="Forum" asp-action="UnDeletePost" asp-route-id="@post.Id">UnDelete</a>
+                    </td>
+                </tr>
             }
+        }
+    }
+
+</table>
 
 
-            <div class="col-md-offset-5 col-md-5">
-                <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@bbsThread.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
-            </div>
-
-        </div>
-    </div>
-
-}
