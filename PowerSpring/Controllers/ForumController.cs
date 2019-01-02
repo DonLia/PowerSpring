@@ -23,17 +23,29 @@ namespace PowerSpring.Controllers
         }
 
         [Authorize]
+        //Display forum Index page and Details Page
         public IActionResult Index()
         {
-            var bBSThreads = _postRepository.Posts.OrderBy(t => t.Id);
-            var bBSReplies = _replyRepository.Replies;
+            var post = _postRepository.Posts.OrderBy(t => t.Id);
+            var reply = _replyRepository.Replies;
             ForumViewModel forumViewModel = new ForumViewModel
             {
-                Posts = bBSThreads.ToList(),
-                Replies = bBSReplies.ToList()
+                Posts = post.ToList(),
+                Replies = reply.ToList()
             };
             return View(forumViewModel);
         }
+
+        public IActionResult Details(int id)
+        {
+            var forumViewModel = new ForumViewModel()
+            {
+                post = _postRepository.GetPostById(id),
+                Replies = _replyRepository.GetRepliesByParentId(id)
+            };
+            return View(forumViewModel);
+        }
+
         //Get Input pages of Reply or Post
         public IActionResult NewPost()
         {
@@ -88,6 +100,12 @@ namespace PowerSpring.Controllers
 
             return RedirectToAction("DeleteComplete");
         }
+        public IActionResult UnDeletePost(int id)
+        {
+            _postRepository.UnDeletePostById(id);
+
+            return RedirectToAction("DeleteComplete");
+        }
         public IActionResult BlockPost(int id)
         {
             _postRepository.BlockPostById(id);
@@ -99,7 +117,7 @@ namespace PowerSpring.Controllers
             _postRepository.UbBlockPostById(id);
             return RedirectToAction("BlockComplete");
         }
-        
+
 
         //Successful pages
         public IActionResult PostComplete()

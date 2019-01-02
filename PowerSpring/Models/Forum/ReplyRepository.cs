@@ -34,9 +34,27 @@ namespace PowerSpring.Models.Forum
             _appDbContext.SaveChanges();
         }
 
+        public List<Reply> GetRepliesByParentId(int parentId)
+        {
+            List<Reply> replyList = new List<Reply>();
+            
+            
+            foreach(var reply in _appDbContext.Replies)
+            {
+                if (reply.ParentId == parentId)
+                {
+                    replyList.Add(reply);
+                }
+            }
+
+            return replyList;
+
+        }
+
         public Reply GetReplyById(int replyId)
         {
             return _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId);
         }
     }
 }
+

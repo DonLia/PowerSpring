@@ -5,82 +5,72 @@
     ViewData["Title"] = "PowerSpring BBS";
 }
 <asp:Label ID="CurrentTime" runat="server" />
-<div>
+<div id="wrapper">
     <h3>Current User: @User.Identity.Name</h3>
-
 </div>
+@*Start New Post Button*@
 <div class="form-group">
     <div class="col-md-5">
         <a asp-controller="Forum" asp-action="NewPost"><input type="button" class="btn btn-primary" value="Start New Post"></a>
-
     </div>
 </div>
 
-@foreach (var post in Model.Posts)
-{
-    @if (!post.IsDeleted)
+@*Display All Undeleted Posts*@
+<table style="width:80%">
+    <tr>
+        <th>Post Title</th>
+        <th>Poster Id</th>
+        <th>Post Time</th>
+        @if (User.IsInRole("Admin"))
+        {
+            <th>DELETE POST</th>
+            <th>BLOCK REPLY</th>
+        }
+    </tr>
+    @foreach (var post in Model.Posts)
     {
-        <div class="col-sm-12 col-lg-12 col-md-12">
-
-            <div>
-                @*<text>This is Title of a Post: </text>
-                    <text class="push-right">@post.Title</text>*@
-                <h3>This is Title of a Post: @post.Title</h3>
+        @if (!post.IsDeleted)
+        {
+            <tr>
+                <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a> </td>
+                <td> @post.UserId</td>
+                <td> @post.Time</td>
                 @if (User.IsInRole("Admin"))
                 {
-                    <div>
-                        <a asp-controller="Forum" asp-action="BlockPost" asp-route-id="@post.Id">Block Replies of this Post</a>
-                    </div>
-                    <div>
-                        <a asp-controller="Forum" asp-action="DeletePost" asp-route-id="@post.Id">Delete The Whole Post</a>
-                    </div>
-                }
-            </div>
-            <div>
-                @*<text >Post UserId: </text>
-                    <text>@post.UserId</text>*@
-                <h4>Post UserId: @post.UserId</h4>
-
-            </div>
-            <div>
-                @*<text >This is Post Content: </text>
-                    <text> @post.Content</text>*@
-                <p>This is Post Content:  @post.Content</p>
-            </div>
-
-            @foreach (var reply in Model.Replies)
-            {
-                @if (reply.ParentId == post.Id)
-                {
-                    if (!reply.IsDeleted)
+                    <td>
+                        <a asp-controller="Forum" asp-action="DeletePost" asp-route-id="@post.Id">Delete</a>
+                    </td>
+                    @if (!post.IsBlocked)
                     {
-                        <div class="col-md-offset-1">
-                            @*<text>This is Reply Content: </text>
-                                <text>@reply.Content</text>*@
-                            <text>This is Reply Content: @reply.Content </text>
-
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a asp-controller="Forum" asp-action="DeleteReply" asp-route-id="@reply.Id"> Delete</a>
-                            }
-                        </div>
+                        <td>
+                            <a asp-controller="Forum" asp-action="BlockPost" asp-route-id="@post.Id">Block</a>
+                        </td>
+                    }
+                    @if (post.IsBlocked)
+                    {
+                        <td>
+                            <a asp-controller="Forum" asp-action="UnBlockPost" asp-route-id="@post.Id">UnBlock</a>
+                        </td>
                     }
                 }
-            }
-            @if (!post.IsBlocked)
+            </tr>
+        }
+        else
+        {
+            @if (User.IsInRole("Admin"))
             {
-                <div class="col-md-offset-5 col-md-5">
-                    <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
-                </div>
+                <tr>
+                    <td> @post.Title</td>
+                    <td> @post.UserId</td>
+                    <td> @post.Time</td>
+                    <td>
+                        <a asp-controller="Forum" asp-action="UnDeletePost" asp-route-id="@post.Id">UnDelete</a>
+                    </td>
+                </tr>
             }
-            @if (post.IsBlocked)
-            {
-                <div>
-                    <a asp-controller="Forum" asp-action="UnBlockPost" asp-route-id="@post.Id">Unblock Replies of this Post</a>
-                </div>
-            }
-
-        </div>
-
+        }
     }
-}
+
+</table>
+
+
