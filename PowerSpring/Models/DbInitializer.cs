@@ -41,22 +41,34 @@ namespace PowerSpring.Models
                     );
                 }
 
-                if (!context.BBSThreads.Any())
+                if (!context.Posts.Any())
                 {
                     context.AddRange(
-                        new BBSThread { Title = "Welcome!", Content = "Welcome to Power Spring.", GroupId = 0, UserId = 1, IsBlocked =false, IsDeleted = false},
-                        new BBSThread { Title = "First Thread", Content = "This is acturally the first thread for the furum.", GroupId = 0, UserId = 1, IsBlocked = false, IsDeleted = false }
+                        new Post { Title = "Welcome!", Content = "Welcome to Power Spring.", GroupId = 0, UserId = 1, IsBlocked = false, IsDeleted = false, Time = "SomePostTime" },
+                        new Post { Title = "First Thread", Content = "This is acturally the first thread for the furum.", GroupId = 0, UserId = 1, IsBlocked = false, IsDeleted = false, Time = "SomePostTime" }
                     );
                 }
 
                 context.SaveChanges();
 
-                if (!context.BBSReplies.Any())
+                if (!context.Replies.Any())
                 {
                     context.AddRange(
-                        new BBSReply { Content = "This is the reply of the first Post", ParentThreadId = 1, UserId = 1, IsBlocked = false, IsDeleted = false },
-                        new BBSReply { Content = "This is the reply of the 2nd Post", ParentThreadId = 2, UserId = 1, IsBlocked = false, IsDeleted = false }
+                        new Reply { Content = "This is the reply of the first Post", ParentId = 1, UserId = 1, IsBlocked = false, IsDeleted = false , Time="SomeReplyTime"},
+                        new Reply { Content = "This is the reply of the 2nd Post", ParentId = 2, UserId = 1, IsBlocked = false, IsDeleted = false ,Time = "SomeReplyTime" }
                     );
+                }
+
+                context.SaveChanges();
+
+                if (!context.News.Any())
+                {
+
+                    context.AddRange
+                  (
+                       new News { NewsTitle = "Apple", UserId = 1, Content = "1", Date = "12/28/2018", LongDescription = "this is good", ShortDescription = "hi" }
+                  );
+
                 }
 
                 context.SaveChanges();
