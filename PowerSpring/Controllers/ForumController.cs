@@ -87,7 +87,7 @@ namespace PowerSpring.Controllers
         }
 
         //Delete or Block Reply or Post
-        public IActionResult ForumActions(int id, string act)
+        public IActionResult ForumActions(int id, string act, Post post)
         {
             string message = "";
             switch (act)
@@ -112,6 +112,18 @@ namespace PowerSpring.Controllers
                     _postRepository.UbBlockPostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully unBlocked.";
                     break;
+                case "NewPost":
+                    if (ModelState.IsValid)
+                    {
+                        post.Time = DateTime.Now.ToString();
+                        post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                        _postRepository.AddPost(post);
+                        return RedirectToAction("PostComplete");
+                    }
+                    message = "New Post is accepted. Thanks!";
+                    break;
+
                 default:
                     message = "Nothing happened";
                     break;
