@@ -22,15 +22,33 @@ namespace PowerSpring.Models.Forum
             }
         }
 
-        public void AddThread(Post bbsThread)
+        public void AddPost(Post post)
         {
-            _appDbContext.Posts.Add(bbsThread);
-            _appDbContext.SaveChanges(); ;
+            _appDbContext.Posts.Add(post);
+            _appDbContext.SaveChanges(); 
         }
 
-        public Post GetThreadById(int threadId)
+        public void BlockPostById(int postId)
         {
-            return _appDbContext.Posts.FirstOrDefault(th => th.Id ==threadId);
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).IsBlocked = true;
+            _appDbContext.SaveChanges();
+        }
+
+        public void DeletePostById(int postId)
+        {
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).IsDeleted = true;
+            _appDbContext.SaveChanges();
+        }
+
+        public Post GetPostById(int postId)
+        {
+            return _appDbContext.Posts.FirstOrDefault(th => th.Id ==postId);
+        }
+
+        public void UbBlockPostById(int postId)
+        {
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).IsBlocked = false;
+            _appDbContext.SaveChanges();
         }
     }
 }

@@ -9,8 +9,11 @@ namespace PowerSpring.Models.Forum
     {
         IEnumerable<Post> Posts { get; }
 
-        void AddThread(Post bbsThread);
-        Post GetThreadById(int bbsThreadId);
+        void AddPost(Post post);
+        Post GetPostById(int postId);
+        void DeletePostById(int postId);
+        void BlockPostById(int postId);
+        void UbBlockPostById(int postId);
     }
 
 }

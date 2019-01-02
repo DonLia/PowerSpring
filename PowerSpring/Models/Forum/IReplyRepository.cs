@@ -7,7 +7,9 @@ namespace PowerSpring.Models.Forum
 {
     public interface IReplyRepository
     {
-        IEnumerable<Reply> BBSReplies { get; }
-        void AddReply(Reply bbsReply);
+        IEnumerable<Reply> Replies { get; }
+        void AddReply(Reply reply);
+        Reply GetReplyById(int replyId);
+        void DeleteReplyById(int replyId);
     }
 }

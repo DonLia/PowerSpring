@@ -14,7 +14,7 @@ namespace PowerSpring.Models.Forum
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Reply> BBSReplies
+        public IEnumerable<Reply> Replies
         {
             get
             {
@@ -22,10 +22,21 @@ namespace PowerSpring.Models.Forum
             }
         }
 
-        public void AddReply(Reply bbsReply)
+        public void AddReply(Reply reply)
         {
-            _appDbContext.Replies.Add(bbsReply);
-            _appDbContext.SaveChanges(); ;
+            _appDbContext.Replies.Add(reply);
+            _appDbContext.SaveChanges(); 
+        }
+
+        public void DeleteReplyById(int replyId)
+        {
+            _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId).IsDeleted = true;
+            _appDbContext.SaveChanges();
+        }
+
+        public Reply GetReplyById(int replyId)
+        {
+            return _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId);
         }
     }
 }
