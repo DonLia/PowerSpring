@@ -1,9 +1,54 @@
-﻿@*<asp:Label ID="CurrentTime" runat="server" />*@
-<h2>Hello, @User.Identity.Name</h2>
+﻿@model WebUser
+<h2>Hello</h2>
+<div class="tab-content profile-tab" id="myTabContent">
+    <div class="row">
+        <div class="col-md-6">
+            <label>User Name</label>
+        </div>
+        <div class="col-md-6">
+            <p>
+                @Model.UserName
+            <a asp-controller="Account" asp-action="Update" asp-route-id="UserName"><input type="button" class="btn btn-primary" value="Change User Name"></a>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <label>Email</label>
+    </div>
+    <div class="col-md-6">
 
-<div class="form-group">
-    <div class="col-md-5">
-        <a asp-controller="Forum" asp-action="Index"><input type="button" class="btn btn-primary" value="Click Here return to BBS" /></a>
+        <p>
+            @Model.Email
+            <a asp-controller="Account" asp-action="Update" asp-route-id="Email"><input type="button" class="btn btn-primary" value="Update Email"></a>
+        </p>
 
     </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <label>Phone</label>
+    </div>
+    <div class="col-md-6">
+
+        <p>
+            @Model.Phone
+            <a asp-controller="Account" asp-action="Update" asp-route-id="Phone"><input type="button" class="btn btn-primary" value="Update Phone"></a>
+        </p>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <label>Password</label>
+    </div>
+    <div class="col-md-6">
+
+        <p>
+            <a asp-controller="Account" asp-action="Update" asp-route-id="Password"><input type="button" class="btn btn-primary" value="Change Password"></a>
+        </p>
+
+    </div>
+</div>
+
 </div>
