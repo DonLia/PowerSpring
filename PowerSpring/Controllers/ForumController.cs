@@ -87,50 +87,87 @@ namespace PowerSpring.Controllers
         }
 
         //Delete or Block Reply or Post
-
-        public IActionResult DeleteReply(int id)
+        public IActionResult ForumActions(int id, string act)
         {
-            _replyRepository.DeleteReplyById(id);
+            string message = "";
+            switch (act)
+            {
+                case "DeletePost":
+                    _postRepository.DeletePostById(id);
+                    message = "Post ID: " + id.ToString() + " has been successfully DELETED";
+                    break;
+                case "BlockPost":
+                    _postRepository.BlockPostById(id);
+                    message = "Post ID: " + id.ToString() + " has been successfully BLOCKED, no replies will be accepted.";
+                    break;
+                case "DeleteReply":
+                    _replyRepository.DeleteReplyById(id);
+                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
+                    break;
+                case "UnDeletePost":
+                    _postRepository.UnDeletePostById(id);
+                    message = "Post ID: " + id.ToString() + " has been successfully recovered.";
+                    break;
+                case "UnBlockPost":
+                    _postRepository.UbBlockPostById(id);
+                    message = "Post ID: " + id.ToString() + " has been successfully unBlocked.";
+                    break;
+                default:
+                    message = "Nothing happened";
+                    break;
 
-            return RedirectToAction("DeleteComplete");
+            }
+            return RedirectToAction("Complete", "Forum", new { act = message });
         }
-        public IActionResult DeletePost(int id)
-        {
-            _postRepository.DeletePostById(id);
 
-            return RedirectToAction("DeleteComplete");
-        }
-        public IActionResult UnDeletePost(int id)
-        {
-            _postRepository.UnDeletePostById(id);
+        //public IActionResult DeleteReply(int id)
+        //{
+        //    _replyRepository.DeleteReplyById(id);
 
-            return RedirectToAction("DeleteComplete");
-        }
-        public IActionResult BlockPost(int id)
-        {
-            _postRepository.BlockPostById(id);
+        //    return RedirectToAction("DeleteComplete");
+        //}
+        //public IActionResult DeletePost(int id)
+        //{
+        //    _postRepository.DeletePostById(id);
 
-            return RedirectToAction("BlockComplete");
-        }
-        public IActionResult UnBlockPost(int id)
-        {
-            _postRepository.UbBlockPostById(id);
-            return RedirectToAction("BlockComplete");
-        }
+        //    return RedirectToAction("DeleteComplete");
+        //}
+        //public IActionResult UnDeletePost(int id)
+        //{
+        //    _postRepository.UnDeletePostById(id);
+
+        //    return RedirectToAction("DeleteComplete");
+        //}
+        //public IActionResult BlockPost(int id)
+        //{
+        //    _postRepository.BlockPostById(id);
+
+        //    return RedirectToAction("BlockComplete");
+        //}
+        //public IActionResult UnBlockPost(int id)
+        //{
+        //    _postRepository.UbBlockPostById(id);
+        //    return RedirectToAction("BlockComplete");
+        //}
 
 
         //Successful pages
+        public IActionResult Complete(string act)
+        {
+            ViewBag.message = act;
+            return View();
+        }
         public IActionResult PostComplete()
         {
             return View();
         }
-        public IActionResult DeleteComplete()
-        {
-            return View();
-        }
-        public IActionResult BlockComplete()
-        {
-            return View();
-        }
+        //public IActionResult DeleteComplete()
+        //{
+        //    return View();
+        //}
+        //public IActionResult BlockComplete()
+        //{
+        //    return View();
+        //}
     }
 }
