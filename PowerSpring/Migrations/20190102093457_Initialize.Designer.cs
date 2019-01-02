@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190101221100_initial")]
-    partial class initial
+    [Migration("20190102093457_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
