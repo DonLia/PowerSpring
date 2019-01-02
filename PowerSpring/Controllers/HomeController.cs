@@ -20,6 +20,7 @@ namespace PowerSpring.Controllers
 
         public IActionResult Index()
         {
+            //var time = DateTime.Now;
             ViewBag.Title = "Power Spring";
 
             var pies = _pieRepository.Pies.OrderBy(p => p.Name);
