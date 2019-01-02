@@ -8,7 +8,7 @@ namespace PowerSpring.ViewModels
 {
     public class ForumViewModel
     {
-        public List<BBSThread> BBSThreads { get; set; }
-        public List<BBSReply> BBSReplies { get; set; }
+        public List<Post> Posts { get; set; }
+        public List<Reply> Replies { get; set; }
     }
 }

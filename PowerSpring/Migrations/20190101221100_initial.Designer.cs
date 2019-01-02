@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190101171143_NewsMigration")]
-    partial class NewsMigration
+    [Migration("20190101221100_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,29 +61,7 @@ namespace PowerSpring.Migrations
                     b.ToTable("Feedbacks");
                 });
 
-            modelBuilder.Entity("PowerSpring.Models.Forum.BBSReply", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(2000);
-
-                    b.Property<bool>("IsBlocked");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int>("ParentThreadId");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BBSReplies");
-                });
-
-            modelBuilder.Entity("PowerSpring.Models.Forum.BBSThread", b =>
+            modelBuilder.Entity("PowerSpring.Models.Forum.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,6 +77,8 @@ namespace PowerSpring.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<string>("Time");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100);
@@ -107,7 +87,31 @@ namespace PowerSpring.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BBSThreads");
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("PowerSpring.Models.Forum.Reply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(2000);
+
+                    b.Property<bool>("IsBlocked");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("ParentId");
+
+                    b.Property<string>("Time");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Replies");
                 });
 
             modelBuilder.Entity("PowerSpring.Models.News", b =>
