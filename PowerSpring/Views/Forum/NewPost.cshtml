@@ -1,7 +1,7 @@
 ﻿@using PowerSpring.Models.Forum
 @model Post
 
-<form asp-action="Index" method="post" class="form-horizontal" role="form">
+<form asp-action="ForumActions" asp-route-act="NewPost" method="post" class="form-horizontal" role="form">
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label"></label>
         <div class="col-md-5">

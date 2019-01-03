@@ -7,19 +7,21 @@
 
 @foreach (var news in @Model.NewsList)
 {
-    <div class="col-sm-4 col-lg-4 col-md-4">
-        @*<div class="thumbnail">*@
-           
-            <div class="caption">
-                <h3 class="pull-right">@news.Date</h3>
-                <h3>
-                    <a asp-controller="News" asp-action="Details" asp-route-id="@news.Id">@news.NewsTitle</a>
-                </h3>
-                <p>@news.ShortDescription</p>
-            </div>
-        @*</div>*@
-        @*//*@
-    </div>
-}
+    if (!news.IsDeleted)
+    {
+        <tr>
+            <td><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a> </td>
+            <td> @news.Content</td>
+            <td> @news.Date</td>
+        </tr>
+
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-controller="News" asp-action="DeleteNews" asp-route-id="@news.Id">Delete</a>
+                </td>
+            }
+ }
 
 
