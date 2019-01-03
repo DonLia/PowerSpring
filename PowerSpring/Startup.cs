@@ -77,12 +77,7 @@ namespace PowerSpring
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=News}/{action=Index}/{id?}");
-                routes.MapRoute(
-                    name: "News",
-                    template: "{controller=News}/{action=Index}/{id?}");
-                routes.MapRoute(
-                    name: "NewsInPut",
-                    template: "{controller=News}/{action=NewsInPut}/{id?}");
+
             });
 
             DbInitializer.Seed(app);
