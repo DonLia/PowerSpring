@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PowerSpring.Models
+namespace PowerSpring.Models.News
 {
-    public class News
+    public class NewsInfo
     {
         public int Id { get; set; }
 

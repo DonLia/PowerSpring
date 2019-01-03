@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using PowerSpring.Models.Forum;
+using PowerSpring.Models.News;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace PowerSpring.Models
 
                     context.AddRange
                   (
-                       new News { NewsTitle = "Apple", UserId = 1, Content = "1", Date = "12/28/2018", LongDescription = "this is good", ShortDescription = "hi" }
+                       new NewsInfo { NewsTitle = "Apple", UserId = 1, Content = "1", Date = "12/28/2018", LongDescription = "this is good", ShortDescription = "hi" }
                   );
 
                 }
