@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190102165803_UpdateMirgration")]
-    partial class UpdateMirgration
+    [Migration("20190103061922_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,7 +114,7 @@ namespace PowerSpring.Migrations
                     b.ToTable("Replies");
                 });
 
-            modelBuilder.Entity("PowerSpring.Models.News", b =>
+            modelBuilder.Entity("PowerSpring.Models.News.NewsInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,6 +123,10 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Content");
 
                     b.Property<string>("Date");
+
+                    b.Property<bool>("IsBlocked");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LongDescription");
 

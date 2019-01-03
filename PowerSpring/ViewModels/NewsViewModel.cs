@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PowerSpring.Models.News;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace PowerSpring.ViewModels
     {
         public string Title { get; set; }
        
-        public List<Models.News> NewsList { get; set; }
+        public List<NewsInfo> NewsList { get; set; }
+
     }
 }

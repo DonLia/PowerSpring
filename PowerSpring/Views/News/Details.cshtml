@@ -1,0 +1,22 @@
+﻿@using PowerSpring.Models.News
+@model NewsInfo
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<h2>@Model.NewsTitle</h2>
+
+<div>
+   
+    <div>
+        <h2>@Model.UserId</h2>
+        @*<h3>
+            <a href="#">@Model.Name</a>
+        </h3>*@
+        <h4>@Model.ShortDescription</h4>
+        <p>@Model.Content</p>
+    </div>
+</div>
+
