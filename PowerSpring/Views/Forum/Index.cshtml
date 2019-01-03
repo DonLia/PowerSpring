@@ -1,10 +1,8 @@
-﻿
-@model ForumViewModel
-
+﻿@model ForumViewModel
 @{
     ViewData["Title"] = "PowerSpring BBS";
 }
-@*<asp:Label ID="CurrentTime" runat="server" />*@
+
 <div id="wrapper">
     <h3>Hi, @User.Identity.Name Welcom to use PowerSpring BBS</h3>
 </div>
@@ -12,70 +10,81 @@
 @*Start New Post Button*@
 
 <div class="blockDisplay">
-    <a asp-controller="Forum" asp-action="NewPost"><input type="button" class="btn btn-primary" value="Start New Post"></a>
+    <a asp-controller="Forum" asp-action="NewPost">
+        <input type="button" class="btn btn-primary" value="Start New Post">
+    </a>
 </div>
 
 
 @*Display All Undeleted Posts*@
-<table style="width:100%">
-    <tr>
-        <th>Post Title</th>
-        <th>Poster Id</th>
-        <th>Poster Name</th>
-        <th>Post Time</th>
-        @if (User.IsInRole("Admin"))
-        {
+@if (User.IsInRole("Admin"))
+{
+    <table style="width:100%">
+        <tr>
+            <th>Poster Id</th>
+            <th>Poster Name</th>
+            <th>Post Time</th>
+            <th>Post Title</th>
             <th>DELETE POST</th>
             <th>BLOCK REPLY</th>
+        </tr>
+
+        @foreach (var post in Model.Posts)
+        {
+            <tr>
+                <td> @post.UserId</td>
+                <td> @post.UserName</td>
+                <td> @post.Time</td>
+                @if (!post.IsDeleted)
+                {
+                    <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a> </td>
+                    <td>
+                        <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="DeletePost">Delete</a>
+                    </td>
+                    @if (!post.IsBlocked)
+                    {
+                        <td>
+                            <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="BlockPost">Block</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnBlockPost">UnBlock</a>
+                        </td>
+                    }
+                }
+                else
+                {
+                    <td> @post.Title</td>
+                    <td>
+                        <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnDeletePost">UnDelete</a>
+                    </td>
+                    <td> Not Valid </td>
+                }
+            </tr>
         }
-    </tr>
+    </table>
+}
+else
+{
     @foreach (var post in Model.Posts)
     {
-        @if (!post.IsDeleted)
-        {
-    <tr>
-        <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a> </td>
-        <td> @post.UserId</td>
-        <td> @post.UserName</td>
-        <td> @post.Time</td>
-        @if (User.IsInRole("Admin"))
-        {
-            <td>
-                <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="DeletePost">Delete</a>
-            </td>
-            @if (!post.IsBlocked)
-            {
-                <td>
-                    <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="BlockPost">Block</a>
-                </td>
-            }
-            else
-            {
-                <td>
-                    <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnBlockPost">UnBlock</a>
-                </td>
-            }
-        }
-    </tr>
-        }
-        else
-        {
-            @if (User.IsInRole("Admin"))
-            {
-    <tr>
-        <td> @post.Title</td>
-        <td> @post.UserId</td>
-        <td> @post.UserName</td>
-        <td> @post.Time</td>
-        <td>
-            <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnDeletePost">UnDelete</a>
-        </td>
-        <td> Not Valid </td>
-    </tr>
-            }
-        }
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id">
+                    <img src="@post.ImageUrl" alt="">
+                </a>
+                <div class="caption">
+                    <h3 class="pull-right">@post.UserName</h3>
+                    <a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id">
+                        <h3> @post.Title </h3>
+                    </a>
+                    <h3>@post.Time</h3>
+                    <p>@post.Content</p>
+                </div>
+            </div>
+        </div>
     }
 
-</table>
-
-
+}
