@@ -23,9 +23,10 @@ namespace PowerSpring.Models.Forum
 
         public int GroupId { get; set; } 
         public int UserId { get; set; }
+        public string UserName { get; set; }
 
         public string Time { get; set; }
-
+        public string ImageUrl { get; set; }
         //public List<BBSReply> Replies { get; set; }
 
 

@@ -1,57 +1,78 @@
 ﻿@model ForumViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["title"] = "details";
 }
 
 
 
-<div class="col-sm-12 col-lg-12 col-md-12">
 
-    <div>
-        <h3>This is Title of a Post: @Model.post.Title</h3>
+<h2>@Model.post.Title</h2>
 
-        <div>
-            <h4>Post UserId: @Model.post.UserId</h4>
-
-        </div>
-        <div>
-            <p>This is Post Content:  @Model.post.Content</p>
-        </div>
-
-    </div>
+<div class="thumbnail">
+    @if (!(Model.post.ImageUrl == null))
+    {
+        <img alt="@Model.post.Title" src="@Model.post.ImageUrl">
+    }
+    <h4>@Model.post.Content</h4>
 </div>
-<div  class="col-md-12">
+
+
+
+
+<div class="blockdisplay">
     @if (!Model.post.IsBlocked)
     {
         <div>
-            <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@Model.post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
+            <a asp-controller="forum" asp-action="newreply" asp-route-id="@Model.post.Id"><input type="button" class="btn btn-primary" value="reply"></a>
         </div>
     }
 </div>
+
 @if (@Model.Replies.Any())
-{
-    <div>
-        @foreach (var reply in @Model.Replies)
+{<table style="width:100%">
+        <tr>
+            <th style="width:60%">Replies</th>
+            <th>Respondent name</th>
+            <th>Reply Time</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>DELETE REPLY</th>
+            }
+        </tr>
+
+        @foreach (var reply in Model.Replies)
         {
             @if (!reply.IsDeleted)
             {
-                <div class="col-md-offset-1">
-                    <p>This is Reply Content: @reply.Content </p>
-                </div>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="DeleteReply"> Delete</a>
-                }
+
+
+                <tr>
+                    <td>@reply.Content</td>
+                    <td>@reply.UserName</td>
+                    <td>@reply.Time</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-controller="forum" asp-action="forumactions" asp-route-id="@reply.Id" asp-route-act="deletereply"> DELETE</a>
+                        </td>
+                    }
+                </tr>
+
+
             }
 
         }
 
-    </div>
+    </table>
 }
 else
 {
-    <div class="col-md-offset-1">
-        <h5>No Replies in This Post </h5>
+    <div>
+        <h4>no replies in this post </h4>
     </div>
 }
+
+
+
+

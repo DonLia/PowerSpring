@@ -20,6 +20,7 @@ namespace PowerSpring.Models.Forum
         public String Time { get; set; }
 
         public int UserId { get; set; }
+        public string UserName { get; set; }
         public bool IsBlocked { get; set; }
         public bool IsDeleted { get; set; }
     }

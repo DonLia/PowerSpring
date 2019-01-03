@@ -6,21 +6,22 @@
 }
 @*<asp:Label ID="CurrentTime" runat="server" />*@
 <div id="wrapper">
-    <h3>Current User: @User.Identity.Name</h3>
+    <h3>Hi, @User.Identity.Name Welcom to use PowerSpring BBS</h3>
 </div>
 
 @*Start New Post Button*@
-<div>
-    <div class="col-md-5 col-md-offset-1" >
-        <a asp-controller="Forum" asp-action="NewPost"><input type="button" class="btn btn-primary" value="Start New Post"></a>
-    </div>
+
+<div class="blockDisplay">
+    <a asp-controller="Forum" asp-action="NewPost"><input type="button" class="btn btn-primary" value="Start New Post"></a>
 </div>
+
 
 @*Display All Undeleted Posts*@
 <table style="width:80%">
     <tr>
         <th>Post Title</th>
         <th>Poster Id</th>
+        <th>Poster Name</th>
         <th>Post Time</th>
         @if (User.IsInRole("Admin"))
         {
@@ -32,42 +33,45 @@
     {
         @if (!post.IsDeleted)
         {
-            <tr>
-                <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a> </td>
-                <td> @post.UserId</td>
-                <td> @post.Time</td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="DeletePost">Delete</a>
-                    </td>
-                    @if (!post.IsBlocked)
-                    {
-                        <td>
-                            <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="BlockPost">Block</a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnBlockPost">UnBlock</a>
-                        </td>
-                    }
-                }
-            </tr>
+    <tr>
+        <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a> </td>
+        <td> @post.UserId</td>
+        <td> @post.UserName</td>
+        <td> @post.Time</td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="DeletePost">Delete</a>
+            </td>
+            @if (!post.IsBlocked)
+            {
+                <td>
+                    <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="BlockPost">Block</a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnBlockPost">UnBlock</a>
+                </td>
+            }
+        }
+    </tr>
         }
         else
         {
             @if (User.IsInRole("Admin"))
             {
-                <tr>
-                    <td> @post.Title</td>
-                    <td> @post.UserId</td>
-                    <td> @post.Time</td>
-                    <td>
-                        <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnDeletePost">UnDelete</a>
-                    </td>
-                </tr>
+    <tr>
+        <td> @post.Title</td>
+        <td> @post.UserId</td>
+        <td> @post.UserName</td>
+        <td> @post.Time</td>
+        <td>
+            <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@post.Id" asp-route-act="UnDeletePost">UnDelete</a>
+        </td>
+        <td> Not Valid </td>
+    </tr>
             }
         }
     }

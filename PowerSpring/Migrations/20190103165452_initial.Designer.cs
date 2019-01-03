@@ -10,7 +10,7 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190103061922_initial")]
+    [Migration("20190103165452_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,8 @@ namespace PowerSpring.Migrations
 
                     b.Property<int>("GroupId");
 
+                    b.Property<string>("ImageUrl");
+
                     b.Property<bool>("IsBlocked");
 
                     b.Property<bool>("IsDeleted");
@@ -84,6 +86,8 @@ namespace PowerSpring.Migrations
                         .HasMaxLength(100);
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
@@ -108,6 +112,8 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Time");
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

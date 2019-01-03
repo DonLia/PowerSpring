@@ -8,6 +8,7 @@ using PowerSpring.Models.Forum;
 using PowerSpring.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using PowerSpring.Models;
 
 namespace PowerSpring.Controllers
 {
@@ -15,11 +16,13 @@ namespace PowerSpring.Controllers
     {
         private readonly IReplyRepository _replyRepository;
         private readonly IPostRepository _postRepository;
+        //private readonly IWebUserRepository _WebuserRepository;
 
         public ForumController(IReplyRepository replyRepository, IPostRepository threadRepository)
         {
             _replyRepository = replyRepository;
             _postRepository = threadRepository;
+            //_WebuserRepository = WebuserRepository;
         }
 
         [Authorize]
@@ -27,11 +30,10 @@ namespace PowerSpring.Controllers
         public IActionResult Index()
         {
             var post = _postRepository.Posts.OrderBy(t => t.Id);
-            var reply = _replyRepository.Replies;
             ForumViewModel forumViewModel = new ForumViewModel
             {
-                Posts = post.ToList(),
-                Replies = reply.ToList()
+                Posts = post.ToList()
+
             };
             return View(forumViewModel);
         }
@@ -57,19 +59,19 @@ namespace PowerSpring.Controllers
         }
 
         //Get Reply or Post from User and update Database
-        [HttpPost]
-        public IActionResult Index(Post post)
-        {
-            if (ModelState.IsValid)
-            {
-                post.Time = DateTime.Now.ToString();
-                post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //[HttpPost]
+        //public IActionResult Index(Post post)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        post.Time = DateTime.Now.ToString();
+        //        post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                _postRepository.AddPost(post);
-                return RedirectToAction("PostComplete");
-            }
-            return View(post);
-        }
+        //        _postRepository.AddPost(post);
+        //        return RedirectToAction("PostComplete");
+        //    }
+        //    return View(post);
+        //}
 
         [HttpPost]
         public IActionResult NewReply(Reply reply, int id)
@@ -79,9 +81,9 @@ namespace PowerSpring.Controllers
                 reply.ParentId = id;
                 reply.Time = DateTime.Now.ToString();
                 reply.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+                reply.UserName = User.Identity.Name;
                 _replyRepository.AddReply(reply);
-                return RedirectToAction("PostComplete");
+                return RedirectToAction("Details",new { id });
             }
             return View();
         }
@@ -117,9 +119,8 @@ namespace PowerSpring.Controllers
                     {
                         post.Time = DateTime.Now.ToString();
                         post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+                        post.UserName = User.Identity.Name;
                         _postRepository.AddPost(post);
-                        return RedirectToAction("PostComplete");
                     }
                     message = "New Post is accepted. Thanks!";
                     break;
@@ -169,8 +170,12 @@ namespace PowerSpring.Controllers
             ViewBag.message = act;
             return View();
         }
-        public IActionResult PostComplete()
+        public IActionResult ReplyComplete(int id)
         {
+            var forumViewModel = new ForumViewModel
+            {
+                Id = id
+            };
             return View();
         }
         //public IActionResult DeleteComplete()

@@ -68,7 +68,9 @@ namespace PowerSpring.Migrations
                     Content = table.Column<string>(maxLength: 2000, nullable: false),
                     GroupId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     Time = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     IsBlocked = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -87,6 +89,7 @@ namespace PowerSpring.Migrations
                     ParentId = table.Column<int>(nullable: false),
                     Time = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     IsBlocked = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
