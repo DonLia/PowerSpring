@@ -4,7 +4,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PowerSpring.Models;
+
+using PowerSpring.Models.News;
 using PowerSpring.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -52,7 +53,7 @@ namespace News.Controllers
             {
                 newsInPut.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                PowerSpring.Models.News news = new PowerSpring.Models.News();
+                NewsInfo news = new NewsInfo();
 
                 news.NewsTitle = newsInPut.NewsTitle;
                 news.Date = System.DateTime.Today.ToShortDateString();

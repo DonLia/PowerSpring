@@ -11,5 +11,6 @@ namespace PowerSpring.ViewModels
         public List<Post> Posts { get; set; }
         public Post post { get; set; }
         public List<Reply> Replies { get; set; }
+        public string Success { get; set; }
     }
 }
