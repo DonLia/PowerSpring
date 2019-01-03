@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace PowerSpring.Models
 {
     public static class DbInitializer
@@ -55,8 +54,8 @@ namespace PowerSpring.Models
                 if (!context.Replies.Any())
                 {
                     context.AddRange(
-                        new Reply { Content = "This is the reply of the first Post", ParentId = 1, UserId = 1, IsBlocked = false, IsDeleted = false , Time="SomeReplyTime"},
-                        new Reply { Content = "This is the reply of the 2nd Post", ParentId = 2, UserId = 1, IsBlocked = false, IsDeleted = false ,Time = "SomeReplyTime" }
+                        new Reply { Content = "This is the reply of the first Post", ParentId = 1, UserId = 1, IsBlocked = false, IsDeleted = false, Time = "SomeReplyTime" },
+                        new Reply { Content = "This is the reply of the 2nd Post", ParentId = 2, UserId = 1, IsBlocked = false, IsDeleted = false, Time = "SomeReplyTime" }
                     );
                 }
 
@@ -72,6 +71,35 @@ namespace PowerSpring.Models
 
                 }
 
+                if (!context.WebUsers.Any())
+                {
+                    WebUser User = new WebUser//initialize user with Username:"User", password:"User" for testing purpose
+                    {
+                        UserName = "User"
+                    };
+                    WebUser Admin = new WebUser//initialize admin with Username:"Admin", password:"Admin" for testing purpose
+                    {
+                        UserName = "Admin",
+                        IsAdmin = true
+                    };
+                    using (var hmac = new System.Security.Cryptography.HMACSHA512())
+                    {
+                        User.PasswordSalt = hmac.Key;
+                        User.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes("User"));
+                    }
+                    using (var hmac = new System.Security.Cryptography.HMACSHA512())
+                    {
+                        Admin.PasswordSalt = hmac.Key;
+                        Admin.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes("Admin"));
+                    }
+                    context.AddRange
+                  (
+                        User,
+                        Admin
+
+                        );
+                        
+                }
                 context.SaveChanges();
             }
         }
