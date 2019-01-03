@@ -58,7 +58,8 @@ namespace News.Controllers
                 news.NewsTitle = newsInPut.NewsTitle;
                 news.Date = System.DateTime.Today.ToShortDateString();
                 news.Content = newsInPut.Content;
-
+                news.ImageThumbnailUrl = newsInPut.ImageThumbnailUrl;
+                news.ShortDescription = newsInPut.ShortDescription;
                 _newsRepository.AddNews(news);
                 
                 return RedirectToAction("NewsInputComplete");

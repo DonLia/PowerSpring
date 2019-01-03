@@ -5,23 +5,45 @@
 
 <h2>@Model.Title</h2>
 
-@foreach (var news in @Model.NewsList)
+@*@foreach (var news in @Model.NewsList)
+    {
+        if (!news.IsDeleted)
+        {
+            <tr>
+                <td><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a> </td>
+                <td> @news.Content</td>
+                <td> @news.Date</td>
+            </tr>
+
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                <a asp-controller="News" asp-action="DeleteNews" asp-route-id="@news.Id">Delete</a>
+            </td>
+        }
+    }*@
+@foreach (var news in Model.NewsList)
 {
     if (!news.IsDeleted)
     {
-        <tr>
-            <td><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a> </td>
-            <td> @news.Content</td>
-            <td> @news.Date</td>
-        </tr>
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+            <img src="@news.ImageThumbnailUrl" alt="">
+            <div class="caption">
+                <h3 class="pull-right">@news.Date</h3>
+                <h3><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h3>
+                <h5>@news.ShortDescription</h5>
+            </div>
+        </div>
+    </div>
 
-            }
-            @if (User.IsInRole("Admin"))
-            {
-                <td>
-                    <a asp-controller="News" asp-action="DeleteNews" asp-route-id="@news.Id">Delete</a>
-                </td>
-            }
- }
-
+    @if (User.IsInRole("Admin"))
+    {
+        <td>
+            <a asp-controller="News" asp-action="BlockNewsById" asp-route-id="@news.Id">Delete</a>
+        </td>
+    }
+    }
+}
 
