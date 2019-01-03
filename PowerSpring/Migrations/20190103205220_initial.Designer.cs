@@ -10,7 +10,7 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190103165452_initial")]
+    [Migration("20190103205220_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,7 @@ namespace PowerSpring.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasMaxLength(2000);
 
                     b.Property<bool>("IsBlocked");
@@ -129,6 +130,8 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Content");
 
                     b.Property<string>("Date");
+
+                    b.Property<string>("ImageThumbnailUrl");
 
                     b.Property<bool>("IsBlocked");
 

@@ -99,6 +99,7 @@ namespace PowerSpring.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasMaxLength(2000);
 
                     b.Property<bool>("IsBlocked");
@@ -127,6 +128,8 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Content");
 
                     b.Property<string>("Date");
+
+                    b.Property<string>("ImageThumbnailUrl");
 
                     b.Property<bool>("IsBlocked");
 

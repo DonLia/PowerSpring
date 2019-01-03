@@ -14,6 +14,7 @@ namespace PowerSpring.Models.News
         public string NewsTitle { get; set; }
 
         public int UserId { get; set; }
+        public string ImageThumbnailUrl { get; set; }
 
 
         public string ShortDescription { get; set; }
