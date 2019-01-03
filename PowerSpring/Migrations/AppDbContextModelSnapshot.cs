@@ -128,6 +128,8 @@ namespace PowerSpring.Migrations
 
                     b.Property<string>("Date");
 
+                    b.Property<string>("ImageThumbnailUrl");
+
                     b.Property<bool>("IsBlocked");
 
                     b.Property<bool>("IsDeleted");

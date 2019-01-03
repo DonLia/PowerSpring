@@ -1,5 +1,9 @@
-﻿@*Feng reviewed 1/3*@
+﻿
+@using Microsoft.AspNetCore.Identity
+
+
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -11,31 +15,44 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
-
                 <ul class="nav navbar-nav">
                     <li><a asp-controller="News" asp-action="Index" class="navbar-brand">Power Spring</a></li>   @*Link To Home*@
                     @*_Pie files*@
                     @*<li><a asp-controller="News" asp-action="Index">News</a></li>
-                    <li><a asp-controller="Feedback" asp-action="Index">Feedback</a></li>*@
+        <li><a asp-controller="Feedback" asp-action="Index">Feedback</a></li>*@
                     <li><a asp-controller="Forum" asp-action="Index">Forum</a></li>
-                    <li><a asp-controller="Account" asp-action="Index">Account</a></li>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li><a asp-controller="Admin" asp-action="Index">Admin</a></li>
-                    }
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-controller="Account" asp-action="Logout">Log off</a></li>
+                        <li><a asp-controller="Account" asp-action="Index">Account</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><a asp-controller="Admin" asp-action="Index">Admin</a></li>
+                            <li><a asp-controller="News" asp-action="NewsInPut">NewsInPut</a></li>
+                        }
                     }
                     else
                     {
-                        <li><a asp-controller="Account" asp-action="Register" asp-route-ReturnUrl="@Context.Request.Path">Register</a></li>
-                        <li><a asp-controller="Account" asp-action="Login" asp-route-ReturnUrl="@Context.Request.Path">Log in</a></li>
+                        <li><a asp-controller="Account" asp-action="Login">Account</a></li>
                     }
                 </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
+                          method="post" class="navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    </form>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a id="registerLink" asp-controller="Account" asp-action="Register">Register</a></li>
+                        <li><a id="loginLink" asp-controller="Account" asp-action="Login">Log in</a></li>
+                    </ul>
+                }
+
             </div>
         </div>
     </nav>
