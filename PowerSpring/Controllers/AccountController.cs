@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using PowerSpring.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,22 +27,49 @@ namespace PowerSpring.Controllers
             _userManager = userManager;
         }
 
+
+        //login action reviewed 1/3
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Login(LoginViewModel loginViewModel, string ReturnUrl)
+        {
+            if (!ModelState.IsValid)
+                return View(loginViewModel);
+
+            var user = _userManager.Authenticate(loginViewModel.UserName, loginViewModel.Password);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User name/password not found");
+                return View(loginViewModel);
+            }
+
+            UpdateIdentity(user);
+
+            if (ReturnUrl != null)
+                return Redirect(ReturnUrl);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        //logout reviewed 1/3
+        public async Task<IActionResult> Logout()
+        {
+            //wait _signInManager.SignOutAsync();
+            //await httpContext.SignOutAsync();
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         public IActionResult Update(String id)
         {
             UpdateViewModel updateViewModel = new UpdateViewModel();
             updateViewModel.UpdateInfo = id;
-            switch (updateViewModel.UpdateInfo) {
-                case "Email":
-                    updateViewModel.InputType = "email";
-                    break;
-                case "Phone":
-                    updateViewModel.InputType = "tel";
-                    break;
+            switch (id) {
                 case "Password":
                     updateViewModel.InputType = "password";
                     break;
@@ -52,9 +80,9 @@ namespace PowerSpring.Controllers
             return View(updateViewModel);
         }
         [HttpPost]
-        public IActionResult Update(UpdateViewModel updateViewModel, String id)
+        public IActionResult Update(UpdateViewModel updateViewModel,String id)
         {
-            if (String.IsNullOrWhiteSpace(updateViewModel.UpdateInfo))
+            if (updateViewModel.UpdateInfo == null)
                 updateViewModel.UpdateInfo = id;
             if (!ModelState.IsValid)
             {
@@ -73,7 +101,19 @@ namespace PowerSpring.Controllers
             {
                 case "UserName":
                     user.UserName = updateViewModel.UpdateInfoValue;
-                    _userManager.Update(user);
+                    try
+                    {
+                        _userManager.Update(user);
+
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("", e.Message);
+                        return View(updateViewModel);
+
+                    }
+                    UpdateIdentity(user);
+
                     break;
                 case "Email":
                     user.Email = updateViewModel.UpdateInfoValue;
@@ -85,8 +125,13 @@ namespace PowerSpring.Controllers
                     break;
                 case "Password":
                     if (updateViewModel.VerifyUpdateInfoValue == updateViewModel.UpdateInfoValue)
+                    {
                         _userManager.Update(user, updateViewModel.UpdateInfoValue);
-                    else {
+                        UpdateIdentity(user);
+                    }
+
+                    else
+                    {
                         ModelState.AddModelError("", "Your new password does not match");
                         updateViewModel.VerifyUpdateInfoValue = null;
                         updateViewModel.UpdateInfoValue = null;
@@ -97,7 +142,7 @@ namespace PowerSpring.Controllers
             return RedirectToAction("Index", "Account");
         }
 
-
+        [Authorize]
         public IActionResult Index()
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -107,25 +152,6 @@ namespace PowerSpring.Controllers
             return View(_user);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
-        {
-            if (!ModelState.IsValid)
-                return View(loginViewModel);
-
-            var user = _userManager.Authenticate(loginViewModel.UserName, loginViewModel.Password);
-
-            if (user == null)
-            {
-                ModelState.AddModelError("", "User name/password not found");
-                return View(loginViewModel);
-            }
-            ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-            return RedirectToAction("Index", "News");
-
-        }
 
         public IActionResult Register()
         {
@@ -135,22 +161,38 @@ namespace PowerSpring.Controllers
         {
             return View();
         }
-
         [HttpPost]
-        public async Task<IActionResult> Register(LoginViewModel loginViewModel)
+        public IActionResult Register(LoginViewModel loginViewModel, string ReturnUrl)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new IdentityUser() { UserName = loginViewModel.UserName };
-                var result = _userManager.Create(loginViewModel.UserName, loginViewModel.Password);
-
-                if (result != null)
+                return View(loginViewModel);
+            }
+            try
+            {
+                var NewUser = _userManager.Create(loginViewModel.UserName, loginViewModel.Password);
+                if (NewUser != null)
                 {
-                    return RedirectToAction("RegisterSuccess", "Account");
+                    UpdateIdentity(NewUser);
                 }
             }
-            return View(loginViewModel);
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(loginViewModel);
+            }
+            if (ReturnUrl != null)
+                return Redirect(ReturnUrl);
+            return RedirectToAction("RegisterSuccess", "Account");
         }
+
+        private async void UpdateIdentity(WebUser user)
+        {
+            ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        }
+
         private IEnumerable<Claim> GetUserClaims(WebUser user)
         {
             List<Claim> claims = new List<Claim>();
@@ -180,13 +222,6 @@ namespace PowerSpring.Controllers
             return claims;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Logout()
-        {
-            //wait _signInManager.SignOutAsync();
-            //await httpContext.SignOutAsync();
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
-        }
+
     }
 }
