@@ -31,5 +31,16 @@ namespace PowerSpring.Models.News
             _appDbContext.SaveChanges();
         }
 
+        public void DeleteNews(News news)
+        {
+            _appDbContext.News.Remove(news);
+            _appDbContext.SaveChanges();
+        }
+        public void BlockNewsById(int Id)
+        {
+            _appDbContext.News.FirstOrDefault(r => r.Id == Id).IsDeleted = true;
+            _appDbContext.SaveChanges();
+        }
+
     }
 }
