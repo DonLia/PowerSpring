@@ -22,18 +22,6 @@ namespace PowerSpring.Models.Forum
             }
         }
 
-        public void AddReply(Reply reply)
-        {
-            _appDbContext.Replies.Add(reply);
-            _appDbContext.SaveChanges(); 
-        }
-
-        public void DeleteReplyById(int replyId)
-        {
-            _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId).IsDeleted = true;
-            _appDbContext.SaveChanges();
-        }
-
         public List<Reply> GetRepliesByParentId(int parentId)
         {
             List<Reply> replyList = new List<Reply>();
@@ -54,6 +42,24 @@ namespace PowerSpring.Models.Forum
         public Reply GetReplyById(int replyId)
         {
             return _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId);
+        }
+        public void AddReply(Reply reply)
+        {
+            _appDbContext.Replies.Add(reply);
+            _appDbContext.SaveChanges();
+        }
+
+        public void DeleteReplyById(int replyId)
+        {
+            _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId).IsDeleted = true;
+            _appDbContext.SaveChanges();
+        }
+
+
+        public void UnDeleteReplyById(int replyId)
+        {
+            _appDbContext.Replies.FirstOrDefault(r => r.Id == replyId).IsDeleted = false;
+            _appDbContext.SaveChanges();
         }
     }
 }

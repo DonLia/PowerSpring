@@ -12,15 +12,16 @@ namespace PowerSpring.Models.Forum
         [BindNever]        
         public int Id { get; set; }
 
-        //[Required]
+        [Required]
         [StringLength(2000, ErrorMessage = "Your comment is required")]
         public string Content { get; set; }
 
-        public int ParentId { get; set; }
         public String Time { get; set; }
+        public int ParentId { get; set; }  
 
         public int UserId { get; set; }
         public string UserName { get; set; }
+
         public bool IsBlocked { get; set; }
         public bool IsDeleted { get; set; }
     }

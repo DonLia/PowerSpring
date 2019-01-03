@@ -53,7 +53,7 @@ namespace PowerSpring.Controllers
             if (ReturnUrl != null)
                 return Redirect(ReturnUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Forum");
         }
 
         //logout reviewed 1/3
@@ -62,7 +62,7 @@ namespace PowerSpring.Controllers
             //wait _signInManager.SignOutAsync();
             //await httpContext.SignOutAsync();
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Forum");
         }
         [HttpGet]
         public IActionResult Update(String id)

@@ -59,19 +59,19 @@ namespace PowerSpring.Controllers
         }
 
         //Get Reply or Post from User and update Database
-        //[HttpPost]
-        //public IActionResult Index(Post post)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        post.Time = DateTime.Now.ToString();
-        //        post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        [HttpPost]
+        public IActionResult NewPost(Post post)
+        {
+            if (ModelState.IsValid)
+            {
+                post.Time = DateTime.Now.ToString();
+                post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        //        _postRepository.AddPost(post);
-        //        return RedirectToAction("PostComplete");
-        //    }
-        //    return View(post);
-        //}
+                _postRepository.AddPost(post);
+                return RedirectToAction("Complete",new { act="Thanks for your post!"});
+            }
+            return View(post);
+        }
 
         [HttpPost]
         public IActionResult NewReply(Reply reply, int id)
@@ -83,13 +83,13 @@ namespace PowerSpring.Controllers
                 reply.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 reply.UserName = User.Identity.Name;
                 _replyRepository.AddReply(reply);
-                return RedirectToAction("Details",new { id });
+                return RedirectToAction("Details", new { id });
             }
             return View();
         }
 
         //Delete or Block Reply or Post
-        public IActionResult ForumActions(int id, string act, Post post)
+        public IActionResult ForumActions(int id, string act)
         {
             string message = "";
             switch (act)
@@ -98,33 +98,28 @@ namespace PowerSpring.Controllers
                     _postRepository.DeletePostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully DELETED";
                     break;
-                case "BlockPost":
-                    _postRepository.BlockPostById(id);
-                    message = "Post ID: " + id.ToString() + " has been successfully BLOCKED, no replies will be accepted.";
-                    break;
-                case "DeleteReply":
-                    _replyRepository.DeleteReplyById(id);
-                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
-                    break;
                 case "UnDeletePost":
                     _postRepository.UnDeletePostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully recovered.";
+                    break;
+
+                case "BlockPost":
+                    _postRepository.BlockPostById(id);
+                    message = "Post ID: " + id.ToString() + " has been successfully BLOCKED, no replies will be accepted.";
                     break;
                 case "UnBlockPost":
                     _postRepository.UbBlockPostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully unBlocked.";
                     break;
-                case "NewPost":
-                    if (ModelState.IsValid)
-                    {
-                        post.Time = DateTime.Now.ToString();
-                        post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                        post.UserName = User.Identity.Name;
-                        _postRepository.AddPost(post);
-                    }
-                    message = "New Post is accepted. Thanks!";
-                    break;
 
+                case "DeleteReply":
+                    _replyRepository.DeleteReplyById(id);
+                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
+                    break;
+                case "UnDeleteReply":
+                    _replyRepository.UnDeleteReplyById(id);
+                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
+                    return RedirectToAction("Details", new { id });
                 default:
                     message = "Nothing happened";
                     break;
@@ -170,14 +165,14 @@ namespace PowerSpring.Controllers
             ViewBag.message = act;
             return View();
         }
-        public IActionResult ReplyComplete(int id)
-        {
-            var forumViewModel = new ForumViewModel
-            {
-                Id = id
-            };
-            return View();
-        }
+        //public IActionResult ReplyComplete(int id)
+        //{
+        //    var forumViewModel = new ForumViewModel
+        //    {
+        //        Id = id
+        //    };
+        //    return View();
+        //}
         //public IActionResult DeleteComplete()
         //{
         //    return View();
