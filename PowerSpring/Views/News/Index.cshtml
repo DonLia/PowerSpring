@@ -10,7 +10,7 @@
     if (!news.IsDeleted)
     {
         <tr>
-            <td><a asp-controller="Forum" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a> </td>
+            <td><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a> </td>
             <td> @news.Content</td>
             <td> @news.Date</td>
         </tr>
