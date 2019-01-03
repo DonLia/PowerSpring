@@ -112,7 +112,7 @@ namespace PowerSpring.Migrations
                     b.ToTable("Replies");
                 });
 
-            modelBuilder.Entity("PowerSpring.Models.News", b =>
+            modelBuilder.Entity("PowerSpring.Models.News.NewsInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,6 +121,10 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Content");
 
                     b.Property<string>("Date");
+
+                    b.Property<bool>("IsBlocked");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LongDescription");
 

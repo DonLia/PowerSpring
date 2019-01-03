@@ -1,10 +1,11 @@
-﻿using PowerSpring.Models;
+﻿using PowerSpring.Models.News;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PowerSpring.Models
+
+namespace PowerSpring.Models.News
 {
     public class NewsRepository:INewsRepository
     {
@@ -14,19 +15,30 @@ namespace PowerSpring.Models
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<News> GetAllNews()
+        public IEnumerable<NewsInfo> GetAllNews()
         {
             return _appDbContext.News;
         }
 
-        public News GetNewsById(int NewsId)
+        public NewsInfo GetNewsById(int NewsId)
         {
             return _appDbContext.News.FirstOrDefault(p => p.Id == NewsId);
 
         }
-        public void AddNews(News news)
+        public void AddNews(NewsInfo news)
         {
             _appDbContext.News.Add(news);
+            _appDbContext.SaveChanges();
+        }
+
+        public void DeleteNews(NewsInfo news)
+        {
+            _appDbContext.News.Remove(news);
+            _appDbContext.SaveChanges();
+        }
+        public void BlockNewsById(int Id)
+        {
+            _appDbContext.News.FirstOrDefault(r => r.Id == Id).IsDeleted = true;
             _appDbContext.SaveChanges();
         }
 

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PowerSpring.Helper;
 using PowerSpring.Models.Forum;
+using PowerSpring.Models.News;
 
 namespace PowerSpring
 {
@@ -75,7 +76,7 @@ namespace PowerSpring
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=News}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "News",
                     template: "{controller=News}/{action=Index}/{id?}");

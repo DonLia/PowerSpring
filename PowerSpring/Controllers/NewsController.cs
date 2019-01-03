@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PowerSpring.Models;
+using PowerSpring.Models.News;
 using PowerSpring.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -45,25 +46,37 @@ namespace News.Controllers
             return View();
         }
         //Process Input 
+        [HttpPost]
         public IActionResult ProcessInPut(NewsInPut newsInPut)
         {
             if (ModelState.IsValid)
             {
                 newsInPut.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                PowerSpring.Models.News news = new PowerSpring.Models.News();
+                NewsInfo news = new NewsInfo();
 
                 news.NewsTitle = newsInPut.NewsTitle;
                 news.Date = System.DateTime.Today.ToShortDateString();
                 news.Content = newsInPut.Content;
 
                 _newsRepository.AddNews(news);
+                
                 return RedirectToAction("NewsInputComplete");
             }
             return View();
         }
 
         public IActionResult NewsInputComplete()
+        {
+            return View();
+        }
+        public IActionResult BlockNewsById(int id)
+        {
+            _newsRepository.BlockNewsById(id);
+
+            return RedirectToAction("DeleteComplete");
+        }
+        public IActionResult DeleteComplete()
         {
             return View();
         }
