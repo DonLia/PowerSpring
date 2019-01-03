@@ -3,12 +3,8 @@
 @{
     ViewData["title"] = "details";
 }
-
-
-
-
+@*<a asp-controller="Forum" asp-action="Index"><h2>@Model.post.Title</h2></a>*@
 <h2>@Model.post.Title</h2>
-
 <div class="thumbnail">
     @if (!(Model.post.ImageUrl == null))
     {
@@ -17,71 +13,71 @@
     <h4>@Model.post.Content</h4>
 </div>
 
-
-
-
-<div class="blockdisplay">
-    @if (!Model.post.IsBlocked)
-    {
-        <div>
-            <a asp-controller="Forum" asp-action="NewReply" asp-route-id ="@Model.post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
-        </div>        
-    }
-</div>
-
-@if (@Model.Replies.Any())
-{<table style="width:100%">
-    <tr>
-        <th style="width:60%">Replies</th>
-        <th>Respondent name</th>
-        <th>Reply Time</th>
-        @if (User.IsInRole("Admin"))
-        {
-            <th>DELETE REPLY</th>
-        }
-    </tr>
-
-    @foreach (var reply in Model.Replies)
-    {
-        @if (!reply.IsDeleted)
-        {
-            <tr>
-                <td>@reply.Content</td>
-                <td>@reply.UserName</td>
-                <td>@reply.Time</td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="DeleteReply"> DELETE</a>
-                    </td>
-                }
-            </tr>
-        }
-        else
-        {
-            <tr>
-                <td>@reply.Content</td>
-                <td>@reply.UserName</td>
-                <td>@reply.Time</td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="UnDeleteReply"> UNDELETE</a>
-                    </td>
-                }
-            </tr>
-        }
-    }
-
-</table>
+@if (Model.post.IsBlocked)
+{
+    <h4>This Post is Blocked for Post, please contact Admin to View and Post Replies </h4>
 }
 else
 {
-    <div>
-        <h4>No Replies in This Post </h4>
+    <div class="blockdisplay">
+        @if (!Model.post.IsBlocked)
+        {
+            <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@Model.post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
+        }
     </div>
+
+    @if (@Model.Replies.Any())
+    {
+        <table style="width:100%">
+            <tr>
+                <th style="width:60%">Replies</th>
+                <th>Respondent name</th>
+                <th>Reply Time</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>DELETE REPLY</th>
+                }
+            </tr>
+
+            @foreach (var reply in Model.Replies)
+            {
+                @if (!reply.IsDeleted)
+                {
+                    <tr>
+                        <td>@reply.Content</td>
+                        <td>@reply.UserName</td>
+                        <td>@reply.Time</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="DeleteReply"> DELETE</a>
+                            </td>
+                        }
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>@reply.Content</td>
+                        <td>@reply.UserName</td>
+                        <td>@reply.Time</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="UnDeleteReply"> UNDELETE</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+
+        </table>
+    }
+    else
+    {
+        <h4>No Replies in This Post </h4>
+    }
+
+
 }
-
-
-
 

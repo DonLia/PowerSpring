@@ -92,6 +92,7 @@ namespace PowerSpring.Controllers
         public IActionResult ForumActions(int id, string act)
         {
             string message = "";
+            int parentId = 0;
             switch (act)
             {
                 case "DeletePost":
@@ -113,13 +114,14 @@ namespace PowerSpring.Controllers
                     break;
 
                 case "DeleteReply":
-                    _replyRepository.DeleteReplyById(id);
-                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
-                    break;
+                    _replyRepository.DeleteReplyById(id);                    
+                    parentId = _replyRepository.GetReplyById(id).ParentId;
+                    return RedirectToAction("Details", new { id = parentId });
+                    
                 case "UnDeleteReply":
-                    _replyRepository.UnDeleteReplyById(id);
-                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
-                    return RedirectToAction("Details", new { id });
+                    _replyRepository.UnDeleteReplyById(id);                    
+                    parentId = _replyRepository.GetReplyById(id).ParentId;
+                    return RedirectToAction("Details", new { id = parentId});
                 default:
                     message = "Nothing happened";
                     break;
