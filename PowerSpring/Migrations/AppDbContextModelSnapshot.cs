@@ -112,7 +112,7 @@ namespace PowerSpring.Migrations
                     b.ToTable("Replies");
                 });
 
-            modelBuilder.Entity("PowerSpring.Models.News", b =>
+            modelBuilder.Entity("PowerSpring.Models.News.NewsInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
