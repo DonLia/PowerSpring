@@ -1,57 +1,83 @@
 ﻿@model ForumViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["title"] = "details";
 }
+<a asp-controller="Forum" asp-action="Index"><h2>@Model.post.Title</h2></a>
 
-
-
-<div class="col-sm-12 col-lg-12 col-md-12">
-
-    <div>
-        <h3>This is Title of a Post: @Model.post.Title</h3>
-
-        <div>
-            <h4>Post UserId: @Model.post.UserId</h4>
-
-        </div>
-        <div>
-            <p>This is Post Content:  @Model.post.Content</p>
-        </div>
-
-    </div>
-</div>
-<div  class="col-md-12">
-    @if (!Model.post.IsBlocked)
+<div class="thumbnail">
+    @if (!(Model.post.ImageUrl == null))
     {
-        <div>
-            <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@Model.post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
-        </div>
+        <img alt="@Model.post.Title" src="@Model.post.ImageUrl">
     }
+    <h4>@Model.post.Content</h4>
 </div>
-@if (@Model.Replies.Any())
+
+@if (Model.post.IsBlocked)
 {
-    <div>
-        @foreach (var reply in @Model.Replies)
-        {
-            @if (!reply.IsDeleted)
-            {
-                <div class="col-md-offset-1">
-                    <p>This is Reply Content: @reply.Content </p>
-                </div>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="DeleteReply"> Delete</a>
-                }
-            }
-
-        }
-
-    </div>
+    <h4>This Post is Blocked for Post, please contact Admin to View and Post Replies </h4>
 }
 else
 {
-    <div class="col-md-offset-1">
-        <h5>No Replies in This Post </h5>
+    <div class="blockdisplay">
+        @if (!Model.post.IsBlocked)
+        {
+            <a asp-controller="Forum" asp-action="NewReply" asp-route-id="@Model.post.Id"><input type="button" class="btn btn-primary" value="Reply"></a>
+        }
     </div>
+
+    @if (@Model.Replies.Any())
+    {
+        <table style="width:100%">
+            <tr>
+                <th style="width:60%">Replies</th>
+                <th>Respondent name</th>
+                <th>Reply Time</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>DELETE REPLY</th>
+                }
+            </tr>
+
+            @foreach (var reply in Model.Replies)
+            {
+                @if (!reply.IsDeleted)
+                {
+                    <tr>
+                        <td>@reply.Content</td>
+                        <td>@reply.UserName</td>
+                        <td>@reply.Time</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="DeleteReply"> DELETE</a>
+                            </td>
+                        }
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>@reply.Content</td>
+                        <td>@reply.UserName</td>
+                        <td>@reply.Time</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-controller="Forum" asp-action="ForumActions" asp-route-id="@reply.Id" asp-route-act="UnDeleteReply"> UNDELETE</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+
+        </table>
+    }
+    else
+    {
+        <h4>No Replies in This Post </h4>
+    }
+
+
 }
+

@@ -12,7 +12,6 @@ namespace PowerSpring.Models.Forum
     {   [BindNever]
         public int Id { get; set; }
 
-
         [Required]
         [StringLength(100, ErrorMessage = "Title is required")]
         public string Title { get; set; }
@@ -21,13 +20,12 @@ namespace PowerSpring.Models.Forum
         [StringLength(2000, ErrorMessage = "Your comment is required")]
         public string Content { get; set; }
 
-        public int GroupId { get; set; } 
-        public int UserId { get; set; }
-
+        public string ImageUrl { get; set; }
         public string Time { get; set; }
+        public int GroupId { get; set; } 
 
-        //public List<BBSReply> Replies { get; set; }
-
+        public int UserId { get; set; }
+        public string UserName { get; set; }
 
         public bool IsBlocked { get; set; } 
         public bool IsDeleted { get; set; } 

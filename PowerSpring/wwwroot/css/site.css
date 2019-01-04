@@ -10,9 +10,15 @@
     padding-right: 15px;
 }
 
-.table, th, td {
+table, th, td {
     border: 1px solid black;
     text-align:center;
+    
+}
+
+.blockDisplay{
+    display:block;
+    margin:1em;
     
 }
 

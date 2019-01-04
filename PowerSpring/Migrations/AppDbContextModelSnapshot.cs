@@ -71,6 +71,8 @@ namespace PowerSpring.Migrations
 
                     b.Property<int>("GroupId");
 
+                    b.Property<string>("ImageUrl");
+
                     b.Property<bool>("IsBlocked");
 
                     b.Property<bool>("IsDeleted");
@@ -82,6 +84,8 @@ namespace PowerSpring.Migrations
                         .HasMaxLength(100);
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
@@ -95,6 +99,7 @@ namespace PowerSpring.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasMaxLength(2000);
 
                     b.Property<bool>("IsBlocked");
@@ -106,6 +111,8 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Time");
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

@@ -12,5 +12,6 @@ namespace PowerSpring.Models.Forum
         Reply GetReplyById(int replyId);
         List<Reply> GetRepliesByParentId(int parentId);
         void DeleteReplyById(int replyId);
+        void UnDeleteReplyById(int replyId);
     }
 }
