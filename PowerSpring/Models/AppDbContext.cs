@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PowerSpring.Models.Forum;
 using PowerSpring.Models.News;
+using PowerSpring.Models.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,6 @@ namespace PowerSpring.Models
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<NewsInfo> News { get; set; }
-
+        //public DbSet<HomePage> HomePages { get; set; }
     }
 }

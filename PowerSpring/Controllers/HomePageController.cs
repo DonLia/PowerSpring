@@ -8,12 +8,12 @@ using PowerSpring.ViewModels;
 
 namespace PowerSpring.Controllers
 {
-    public class HomeController : Controller
+    public class HomePageController : Controller
     {
 
         private readonly IPieRepository _pieRepository;
 
-        public HomeController(IPieRepository pieRepository)
+        public HomePageController(IPieRepository pieRepository)
         {
             _pieRepository = pieRepository;
         }

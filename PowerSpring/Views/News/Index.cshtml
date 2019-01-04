@@ -23,27 +23,46 @@
             </td>
         }
     }*@
-@foreach (var news in Model.NewsList)
-{
-    if (!news.IsDeleted)
+<div>
+    @foreach (var news in Model.NewsList)
     {
-    <div class="col-sm-4 col-lg-4 col-md-4">
-        <div class="thumbnail">
-            <img src="@news.ImageThumbnailUrl" alt="">
-            <div class="caption">
-                <h3 class="pull-right">@news.Date</h3>
-                <h3><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h3>
-                <h5>@news.ShortDescription</h5>
-            </div>
-        </div>
-    </div>
+        if (!news.IsDeleted)
+        {
 
-    @if (User.IsInRole("Admin"))
-    {
-        <td>
-            <a asp-controller="News" asp-action="BlockNewsById" asp-route-id="@news.Id">Delete</a>
-        </td>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@news.ImageThumbnailUrl" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@news.Date</h6>
+                    <p class="card-text">@news.ShortDescription</p>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="News" asp-action="BlockNewsById" asp-route-id="@news.Id" class="btn btn-primary">Delete</a>
+                    }
+                </div>
+            </div>
+
+            @*<div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <img src="@news.ImageThumbnailUrl" alt="">
+                        <div class="caption">
+                            <h3 class="pull-right">@news.Date</h3>
+                            <h3><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h3>
+                            <h5>@news.ShortDescription</h5>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="News" asp-action="BlockNewsById" asp-route-id="@news.Id">Delete</a>
+                            }
+                        </div>
+                    </div>
+                </div>*@
+
+
+        }
     }
-    }
-}
+</div>
+   
+
+ 
 
