@@ -4,7 +4,7 @@
 }
 
 <div id="wrapper">
-    <h3>Hi, @User.Identity.Name Welcom to use PowerSpring BBS</h3>
+    <h3>Hi, @User.Identity.Name Welcom to PowerSpring BBS</h3>
 </div>
 
 @*Start New Post Button*@
@@ -23,7 +23,7 @@
         <tr>
             <th>Poster Id</th>
             <th>Poster Name</th>
-            <th>Post Time</th>
+            <th>Last Edited Time</th>
             <th>Post Title</th>
             <th>DELETE POST</th>
             <th>BLOCK REPLY</th>
@@ -76,11 +76,21 @@ else
                     <img src="@post.ImageUrl" alt="">
                 </a>
                 <div class="caption">
-                    <h3 class="pull-right">@post.UserName</h3>
+                    @if (post.UserId == Model.CurrentUserId)
+                    {
+                        <a asp-controller="Forum" asp-action="Edit" asp-route-id ="@post.Id">
+                            <input type="button" class="btn btn-primary pull-right" value="Edit">
+                        </a>
+                    }
+                    else
+                    {
+                        <h3 class="pull-right">@post.UserName</h3>
+                    }
+
                     <a asp-controller="Forum" asp-action="Details" asp-route-id="@post.Id">
                         <h3> @post.Title </h3>
                     </a>
-                    <h3>@post.Time</h3>
+                    <h4>Last Edited: @post.Time</h4>
                     <p>@post.Content</p>
                 </div>
             </div>

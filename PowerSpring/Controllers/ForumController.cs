@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PowerSpring.Models.Forum;
 using PowerSpring.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using PowerSpring.Models;
+
 
 namespace PowerSpring.Controllers
 {
@@ -29,11 +28,12 @@ namespace PowerSpring.Controllers
         //Display forum Index page and Details Page
         public IActionResult Index()
         {
-            var post = _postRepository.Posts.OrderBy(t => t.Id);
+            var post = _postRepository.Posts.OrderBy(t => (-t.Id));
+            var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             ForumViewModel forumViewModel = new ForumViewModel
             {
-                Posts = post.ToList()
-
+                Posts = post.ToList(),
+                CurrentUserId = currentUserId,
             };
             return View(forumViewModel);
         }
@@ -57,6 +57,11 @@ namespace PowerSpring.Controllers
         {
             return View();
         }
+        public IActionResult Edit(int id)
+        {
+            Post post = _postRepository.GetPostById(id);
+            return View(post);
+        }
 
         //Get Reply or Post from User and update Database
         [HttpPost]
@@ -65,7 +70,7 @@ namespace PowerSpring.Controllers
             if (ModelState.IsValid)
             {
                 post.Time = DateTime.Now.ToString();
-                post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                post.UserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 post.UserName = User.Identity.Name;
                 post.ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/applepie.jpg";
                 _postRepository.AddPost(post);
@@ -89,6 +94,16 @@ namespace PowerSpring.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Edit(Post post, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                _postRepository.ChangePost(post,id);
+                return RedirectToAction("Complete", new { act = "Thanks for your post!" });
+            }
+            return View();
+        }
         //Delete or Block Reply or Post
         public IActionResult ForumActions(int id, string act)
         {
