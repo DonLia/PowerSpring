@@ -96,14 +96,23 @@ namespace PowerSpring.Controllers
                 updateViewModel.VerifyPassword = null;
                 return View(updateViewModel);
             }
-
+            WebUser updateUser = new WebUser()
+            {
+                UserName = user.UserName,
+                IsAdmin = user.IsAdmin,
+                Email = user.Email,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt,
+                Phone = user.Phone,
+                Id=user.Id,
+            };
             switch (updateViewModel.UpdateInfo)
             {
                 case "UserName":
-                    user.UserName = updateViewModel.UpdateInfoValue;
+                    updateUser.UserName = updateViewModel.UpdateInfoValue;
                     try
                     {
-                        _userManager.Update(user);
+                        _userManager.Update(updateUser);
 
                     }
                     catch (Exception e)
@@ -112,22 +121,22 @@ namespace PowerSpring.Controllers
                         return View(updateViewModel);
 
                     }
-                    UpdateIdentity(user);
+                    UpdateIdentity(updateUser);
 
                     break;
                 case "Email":
-                    user.Email = updateViewModel.UpdateInfoValue;
-                    _userManager.Update(user);
+                    updateUser.Email = updateViewModel.UpdateInfoValue;
+                    _userManager.Update(updateUser);
                     break;
                 case "Phone":
-                    user.Phone = updateViewModel.UpdateInfoValue;
-                    _userManager.Update(user);
+                    updateUser.Phone = updateViewModel.UpdateInfoValue;
+                    _userManager.Update(updateUser);
                     break;
                 case "Password":
                     if (updateViewModel.VerifyUpdateInfoValue == updateViewModel.UpdateInfoValue)
                     {
-                        _userManager.Update(user, updateViewModel.UpdateInfoValue);
-                        UpdateIdentity(user);
+                        _userManager.Update(updateUser, updateViewModel.UpdateInfoValue);
+                        UpdateIdentity(updateUser);
                     }
 
                     else
