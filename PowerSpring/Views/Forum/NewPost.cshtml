@@ -1,7 +1,7 @@
 ﻿@using PowerSpring.Models.Forum
 @model Post
 
-<form asp-action="NewPost"  method="post" class="form-horizontal blockDisplay" role="form">
+<form asp-action="NewPost" method="post" class="form-horizontal blockDisplay" role="form">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label"></label>
@@ -19,6 +19,15 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+        <div class="col-md-7">
+            <input type="text" asp-for="ImageUrl" class="form-control">
+        </div>
+        @*<div class="col-md-3">
+            <input type="submit" class="btn btn-primary" value="Uploade Image">
+        </div>*@
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-5">
             <input type="submit" class="btn btn-primary" value="Post">
