@@ -72,7 +72,7 @@ namespace PowerSpring.Controllers
                 post.Time = DateTime.Now.ToString();
                 post.UserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 post.UserName = User.Identity.Name;
-                post.ImageUrl = "https://gillcleerenpluralsight.blob.core.windows.net/files/applepie.jpg";
+                post.ImageUrl = "/images/Default_Picture.png";
                 _postRepository.AddPost(post);
                 return RedirectToAction("Complete",new { act="Thanks for your post!"});
             }
