@@ -76,6 +76,9 @@ namespace PowerSpring
             {
                 routes.MapRoute(
                     name: "default",
+                    template: "{controller=HomePage}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "news",
                     template: "{controller=News}/{action=Index}/{id?}");
 
             });
