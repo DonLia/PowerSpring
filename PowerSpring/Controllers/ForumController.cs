@@ -78,7 +78,7 @@ namespace PowerSpring.Controllers
                 }
                 else
                 {
-                    //VeryfyImageUrl(post.ImageUrl);    //need to write some code
+                    //VeryfyImageUrl(post.ImageUrl);    //need to write some code OR use file upload and get url for the file
                 }
 
                 _postRepository.AddPost(post);
