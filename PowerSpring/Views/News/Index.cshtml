@@ -1,4 +1,4 @@
-﻿
+﻿ 
 @model PowerSpring.ViewModels.NewsViewModel
 
 
@@ -23,13 +23,13 @@
             </td>
         }
     }*@
-<div>
+<div style="margin: auto">
     @foreach (var news in Model.NewsList)
     {
         if (!news.IsDeleted)
         {
-
-            <div class="card" style="width: 18rem;">
+        
+            <div class="card" style="float: left;margin-left:15px">
                 <img class="card-img-top" src="@news.ImageThumbnailUrl" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title"><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h5>
