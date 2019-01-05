@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PowerSpring.Models.Forum;
 using PowerSpring.ViewModels;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Http;
 
 namespace PowerSpring.Controllers
 {
@@ -72,7 +72,15 @@ namespace PowerSpring.Controllers
                 post.Time = DateTime.Now.ToString();
                 post.UserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 post.UserName = User.Identity.Name;
-                post.ImageUrl = "/images/Default_Picture.png";
+                if (post.ImageUrl == null)
+                {
+                    post.ImageUrl = "/images/Default_Picture.png";
+                }
+                else
+                {
+                    //VeryfyImageUrl(post.ImageUrl);    //need to write some code
+                }
+
                 _postRepository.AddPost(post);
                 return RedirectToAction("Complete",new { act="Thanks for your post!"});
             }
