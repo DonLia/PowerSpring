@@ -1,54 +1,54 @@
 ﻿@model WebUser
 <h2>Hello</h2>
 <div class="tab-content profile-tab" id="myTabContent">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row" >
+        <div class="col-md-4">
             <label>User Name</label>
         </div>
-        <div class="col-md-6">
-            <p>
-                @Model.UserName
+        <div class="col-md-4">
+            @Model.UserName
+        </div>
+        <div class="col-md-4">
             <a asp-controller="Account" asp-action="Update" asp-route-id="UserName"><input type="button" class="btn btn-primary" value="Change User Name"></a>
-        </p>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <label>Email</label>
-    </div>
-    <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6">
+            <label>Email</label>
+        </div>
+        <div class="col-md-6">
 
-        <p>
-            @Model.Email
-            <a asp-controller="Account" asp-action="Update" asp-route-id="Email"><input type="button" class="btn btn-primary" value="Update Email"></a>
-        </p>
+            <p>
+                @Model.Email
+                <a asp-controller="Account" asp-action="Update" asp-route-id="Email"><input type="button" class="btn btn-primary" value="Update Email"></a>
+            </p>
 
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <label>Phone</label>
-    </div>
-    <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6">
+            <label>Phone</label>
+        </div>
+        <div class="col-md-6">
 
-        <p>
-            @Model.Phone
-            <a asp-controller="Account" asp-action="Update" asp-route-id="Phone"><input type="button" class="btn btn-primary" value="Update Phone"></a>
-        </p>
+            <p>
+                @Model.Phone
+                <a asp-controller="Account" asp-action="Update" asp-route-id="Phone"><input type="button" class="btn btn-primary" value="Update Phone"></a>
+            </p>
 
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <label>Password</label>
-    </div>
-    <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6">
+            <label>Password</label>
+        </div>
+        <div class="col-md-6">
 
-        <p>
-            <a asp-controller="Account" asp-action="Update" asp-route-id="Password"><input type="button" class="btn btn-primary" value="Change Password"></a>
-        </p>
+            <p>
+                <a asp-controller="Account" asp-action="Update" asp-route-id="Password"><input type="button" class="btn btn-primary" value="Change Password"></a>
+            </p>
 
+        </div>
     </div>
-</div>
 
 </div>

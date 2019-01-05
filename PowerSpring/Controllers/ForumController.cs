@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PowerSpring.Models.Forum;
 using PowerSpring.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace PowerSpring.Controllers
 {
@@ -15,23 +15,25 @@ namespace PowerSpring.Controllers
     {
         private readonly IReplyRepository _replyRepository;
         private readonly IPostRepository _postRepository;
+        //private readonly IWebUserRepository _WebuserRepository;
 
         public ForumController(IReplyRepository replyRepository, IPostRepository threadRepository)
         {
             _replyRepository = replyRepository;
             _postRepository = threadRepository;
+            //_WebuserRepository = WebuserRepository;
         }
 
         [Authorize]
         //Display forum Index page and Details Page
         public IActionResult Index()
         {
-            var post = _postRepository.Posts.OrderBy(t => t.Id);
-            var reply = _replyRepository.Replies;
+            var post = _postRepository.Posts.OrderBy(t => (-t.Id));
+            var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             ForumViewModel forumViewModel = new ForumViewModel
             {
                 Posts = post.ToList(),
-                Replies = reply.ToList()
+                CurrentUserId = currentUserId,
             };
             return View(forumViewModel);
         }
@@ -55,18 +57,32 @@ namespace PowerSpring.Controllers
         {
             return View();
         }
+        public IActionResult Edit(int id)
+        {
+            Post post = _postRepository.GetPostById(id);
+            return View(post);
+        }
 
         //Get Reply or Post from User and update Database
         [HttpPost]
-        public IActionResult Index(Post post)
+        public IActionResult NewPost(Post post)
         {
             if (ModelState.IsValid)
             {
                 post.Time = DateTime.Now.ToString();
-                post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                post.UserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                post.UserName = User.Identity.Name;
+                if (post.ImageUrl == null)
+                {
+                    post.ImageUrl = "/images/Default_Picture.png";
+                }
+                else
+                {
+                    //VeryfyImageUrl(post.ImageUrl);    //need to write some code OR use file upload and get url for the file
+                }
 
                 _postRepository.AddPost(post);
-                return RedirectToAction("PostComplete");
+                return RedirectToAction("Complete",new { act="Thanks for your post!"});
             }
             return View(post);
         }
@@ -79,51 +95,57 @@ namespace PowerSpring.Controllers
                 reply.ParentId = id;
                 reply.Time = DateTime.Now.ToString();
                 reply.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+                reply.UserName = User.Identity.Name;
                 _replyRepository.AddReply(reply);
-                return RedirectToAction("PostComplete");
+                return RedirectToAction("Details", new { id });
             }
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Edit(Post post, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                _postRepository.ChangePost(post,id);
+                return RedirectToAction("Complete", new { act = "Thanks for your post!" });
+            }
+            return View();
+        }
         //Delete or Block Reply or Post
-        public IActionResult ForumActions(int id, string act, Post post)
+        public IActionResult ForumActions(int id, string act)
         {
             string message = "";
+            int parentId = 0;
             switch (act)
             {
                 case "DeletePost":
                     _postRepository.DeletePostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully DELETED";
                     break;
-                case "BlockPost":
-                    _postRepository.BlockPostById(id);
-                    message = "Post ID: " + id.ToString() + " has been successfully BLOCKED, no replies will be accepted.";
-                    break;
-                case "DeleteReply":
-                    _replyRepository.DeleteReplyById(id);
-                    message = "Reply ID: " + id.ToString() + " has been successfully DELETED";
-                    break;
                 case "UnDeletePost":
                     _postRepository.UnDeletePostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully recovered.";
+                    break;
+
+                case "BlockPost":
+                    _postRepository.BlockPostById(id);
+                    message = "Post ID: " + id.ToString() + " has been successfully BLOCKED, no replies will be accepted.";
                     break;
                 case "UnBlockPost":
                     _postRepository.UbBlockPostById(id);
                     message = "Post ID: " + id.ToString() + " has been successfully unBlocked.";
                     break;
-                case "NewPost":
-                    if (ModelState.IsValid)
-                    {
-                        post.Time = DateTime.Now.ToString();
-                        post.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                        _postRepository.AddPost(post);
-                        return RedirectToAction("PostComplete");
-                    }
-                    message = "New Post is accepted. Thanks!";
-                    break;
-
+                case "DeleteReply":
+                    _replyRepository.DeleteReplyById(id);                    
+                    parentId = _replyRepository.GetReplyById(id).ParentId;
+                    return RedirectToAction("Details", new { id = parentId });
+                    
+                case "UnDeleteReply":
+                    _replyRepository.UnDeleteReplyById(id);                    
+                    parentId = _replyRepository.GetReplyById(id).ParentId;
+                    return RedirectToAction("Details", new { id = parentId});
                 default:
                     message = "Nothing happened";
                     break;
@@ -169,10 +191,14 @@ namespace PowerSpring.Controllers
             ViewBag.message = act;
             return View();
         }
-        public IActionResult PostComplete()
-        {
-            return View();
-        }
+        //public IActionResult ReplyComplete(int id)
+        //{
+        //    var forumViewModel = new ForumViewModel
+        //    {
+        //        Id = id
+        //    };
+        //    return View();
+        //}
         //public IActionResult DeleteComplete()
         //{
         //    return View();

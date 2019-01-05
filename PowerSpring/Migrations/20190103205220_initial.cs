@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PowerSpring.Migrations
 {
-    public partial class UnitMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,7 @@ namespace PowerSpring.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     NewsTitle = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
+                    ImageThumbnailUrl = table.Column<string>(nullable: true),
                     ShortDescription = table.Column<string>(nullable: true),
                     LongDescription = table.Column<string>(nullable: true),
                     Date = table.Column<string>(nullable: true),
@@ -66,9 +67,11 @@ namespace PowerSpring.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 100, nullable: false),
                     Content = table.Column<string>(maxLength: 2000, nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    Time = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    Time = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true),
                     IsBlocked = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
@@ -83,10 +86,11 @@ namespace PowerSpring.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(maxLength: 2000, nullable: true),
-                    ParentId = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(maxLength: 2000, nullable: false),
                     Time = table.Column<string>(nullable: true),
+                    ParentId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
                     IsBlocked = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
