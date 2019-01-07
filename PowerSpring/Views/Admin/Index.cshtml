@@ -3,7 +3,7 @@
     Hello, Admin @User.Identity.Name !
 </h2>
 
-<div style="height:500px;overflow-y:scroll">
+<div style="height:500px;overflow-y:scroll;overflow-x:hidden">
     @foreach (var webUser in Model)
     {
         <div class="row">
@@ -11,11 +11,11 @@
             <div class="col-md-6">
                 @if (webUser.Muted)
                 {
-                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightgray" class="btn btn-sm">Muted</a>
+                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightgray;width:10%" class="btn btn-sm">Muted</a>
                 }
                 else
                 {
-                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightblue" class="btn btn-sm">Mute&nbsp;&nbsp;</a>
+                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightblue;width:10%" class="btn btn-sm">Mute</a>
                 }
             </div>
         </div>
@@ -25,22 +25,3 @@
 
 
 </div>
-
-@*@foreach (var webUser in @Model.GetAllWebUsers())
-    {
-        if (!news.IsDeleted)
-        {
-            <tr>
-                <td><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a> </td>
-                <td> @news.Content</td>
-                <td> @news.Date</td>
-            </tr>
-
-        }
-        @if (User.IsInRole("Admin"))
-        {
-            <td>
-                <a asp-controller="News" asp-action="DeleteNews" asp-route-id="@news.Id">Delete</a>
-            </td>
-        }
-    }*@
