@@ -62,7 +62,7 @@ namespace PowerSpring.Controllers
             //wait _signInManager.SignOutAsync();
             //await httpContext.SignOutAsync();
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "News");
         }
         [HttpGet]
         public IActionResult Update(String id)
