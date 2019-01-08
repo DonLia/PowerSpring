@@ -34,6 +34,14 @@ namespace PowerSpring.Models.Forum
             _appDbContext.SaveChanges();
         }
 
+        public void ChangePost(Post post, int postId)
+        {
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).Time = DateTime.Now.ToString();
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).Content = post.Content;
+            _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).Title = post.Title;
+            _appDbContext.SaveChanges();
+        }
+
         public void DeletePostById(int postId)
         {
             _appDbContext.Posts.FirstOrDefault(r => r.Id == postId).IsDeleted = true;

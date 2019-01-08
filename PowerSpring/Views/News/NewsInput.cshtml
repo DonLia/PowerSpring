@@ -1,7 +1,8 @@
 ﻿@using PowerSpring.Models.News
 @model NewsInPut
 
-<form asp-action="ProcessInPut" method="post" class="form-horizontal" role="form">
+@if (User.IsInRole("Admin"))
+ {<form asp-action="ProcessInPut" method="post" class="form-horizontal" role="form">
     <div class="form-group">
         <label asp-for="NewsTitle" class="col-md-2 control-label"></label>
         <div class="col-md-5">
@@ -9,6 +10,18 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label asp-for="ImageThumbnailUrl" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input type="text" asp-for="ImageThumbnailUrl" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ShortDescription" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <textarea asp-for="ShortDescription" class="form-control"></textarea>
+        </div>
+    </div>
     <div class="form-group">
         <label asp-for="Content" class="col-md-2 control-label"></label>
         <div class="col-md-5">
@@ -24,3 +37,4 @@
 
 
 </form>
+}

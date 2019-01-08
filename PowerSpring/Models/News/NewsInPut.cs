@@ -20,8 +20,16 @@ namespace PowerSpring.Models.News
         public string NewsTitle { get; set; }
         public int UserId { get; set; }
         [Required]
-        [StringLength(2000, ErrorMessage = "Your comment is required")]
+        [StringLength(2000, ErrorMessage = "Your image is required")]
+        public string ImageThumbnailUrl { get; set; }
+        [Required]
+        [StringLength(2000, ErrorMessage = "Your description is required")]
+        public string ShortDescription { get; set; }
+        [Required]
+        [StringLength(2000, ErrorMessage = "Your content is required")]
         public string Content { get; set; }
+      
+        
 
         public string Date { get; set; }
 
