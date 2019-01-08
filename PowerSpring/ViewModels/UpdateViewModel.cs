@@ -17,8 +17,10 @@ namespace PowerSpring.ViewModels
         public string VerifyPassword { get; set; }
         
         [Display(Name = "New Email")]
+        [EmailAddress]
         public string Email { get; set; }
         
+        [Phone]
         [Display(Name = "New Phone")]
         public string Phone { get; set; }
         
