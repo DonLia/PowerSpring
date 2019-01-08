@@ -8,13 +8,24 @@ namespace PowerSpring.ViewModels
 {
     public class UpdateViewModel
     {
-        [Required]
-        public string VerifyPassword { get; set; }
         public string UpdateInfo { get; set; }
-        [Required]
-        public string UpdateInfoValue { get; set; }
-        public string VerifyUpdateInfoValue { get; set; }
-        public string InputType { get; set; }
-
+        
+        [Display(Name = "New UserName")]
+        public string UserName { get; set; }
+        
+        [Display(Name = "Verify Your Password")]
+        public string VerifyPassword { get; set; }
+        
+        [Display(Name = "New Email")]
+        public string Email { get; set; }
+        
+        [Display(Name = "New Phone")]
+        public string Phone { get; set; }
+        
+        [Display(Name = "New Password")]
+        public string NewPassword { get; set; }
+        
+        [Display(Name = "Repeat New Password")]
+        public string VerifyNewPassword { get; set; }
     }
 }

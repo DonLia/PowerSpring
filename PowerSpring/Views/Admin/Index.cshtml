@@ -1,4 +1,27 @@
-﻿<h2>
-    Hello Admin @User.Identity.Name !
+﻿@model IEnumerable<WebUser>
+<h2>
+    Hello, Admin @User.Identity.Name !
 </h2>
 
+<div style="height:500px;overflow-y:scroll;overflow-x:hidden">
+    @foreach (var webUser in Model)
+    {
+        <div class="row">
+            <div class="col-md-6">@webUser.UserName</div>
+            <div class="col-md-6">
+                @if (webUser.Muted)
+                {
+                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightgray;width:10%" class="btn btn-sm">Muted</a>
+                }
+                else
+                {
+                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightblue;width:10%" class="btn btn-sm">Mute</a>
+                }
+            </div>
+        </div>
+
+
+    }
+
+
+</div>
