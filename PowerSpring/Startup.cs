@@ -59,6 +59,7 @@ namespace PowerSpring
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IReplyRepository, ReplyRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
+            services.AddTransient<IWebUserRepository, WebUserRepository>();
             services.AddMvc();
         }
 
@@ -76,6 +77,9 @@ namespace PowerSpring
             {
                 routes.MapRoute(
                     name: "default",
+                    template: "{controller=HomePage}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "news",
                     template: "{controller=News}/{action=Index}/{id?}");
 
             });
