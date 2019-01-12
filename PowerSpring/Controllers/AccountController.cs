@@ -21,7 +21,6 @@ namespace PowerSpring.Controllers
     public class AccountController : Controller
     {
         private IUserManager _userManager;
-
         public AccountController(IUserManager userManager)
         {
             _userManager = userManager;
@@ -76,7 +75,7 @@ namespace PowerSpring.Controllers
         [HttpPost]
         public IActionResult Update(UpdateViewModel updateViewModel)
         {
-            var CurUser = _userManager.Authenticate(GetCurrentUser().UserName, updateViewModel.VerifyPassword);
+            var CurUser = _userManager.Authenticate(User.FindFirstValue(ClaimTypes.Name), updateViewModel.VerifyPassword);
             if (CurUser == null) {
                 ModelState.AddModelError("", "Your Password is incorrect. Please try again.");
                 return View(updateViewModel);
@@ -220,12 +219,6 @@ namespace PowerSpring.Controllers
             //claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName.ToString()));
             claims.Add(new Claim(ClaimTypes.Role, _Role));
             return claims;
-        }
-        private WebUser GetCurrentUser()
-        {
-            var UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var CurUser = _userManager.GetById(Convert.ToInt32(UserId));
-            return CurUser;
         }
 
 

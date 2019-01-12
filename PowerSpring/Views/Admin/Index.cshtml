@@ -2,26 +2,39 @@
 <h2>
     Hello, Admin @User.Identity.Name !
 </h2>
-
+<br />
+<div class="row"> @*this div is for searching*@
+</div>
 <div style="height:500px;overflow-y:scroll;overflow-x:hidden">
-    @foreach (var webUser in Model)
-    {
-        <div class="row">
-            <div class="col-md-6">@webUser.UserName</div>
-            <div class="col-md-6">
-                @if (webUser.Muted)
-                {
-                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightgray;width:10%" class="btn btn-sm">Muted</a>
-                }
-                else
-                {
-                    <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightblue;width:10%" class="btn btn-sm">Mute</a>
-                }
-            </div>
-        </div>
-
-
-    }
-
+    <table class="table">
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Is Admin</th>
+            <th>Mute User</th>
+        </tr>
+        @foreach (var webUser in Model)
+        {
+            <tr>
+                <th>@webUser.Id</th>
+                <td>@webUser.UserName</td>
+                <td>@webUser.Email</td>
+                <td>@webUser.Phone</td>
+                <td>@webUser.IsAdmin</td>
+                <td>
+                    @if (webUser.Muted)
+                    {
+                        <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightgray;width:80%" class="btn btn-sm">Muted</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightblue;width:80%" class="btn btn-sm">Mute</a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 
 </div>
