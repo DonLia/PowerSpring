@@ -32,7 +32,7 @@
             <div class="card" style="float: left;margin-left:15px">
                 <img class="card-img-top" src="@news.ImageThumbnailUrl" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title"><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h5>
+                    <h2 class="card-title"><a asp-controller="News" asp-action="Details" asp-route-id="@news.Id"> @news.NewsTitle </a></h2>
                     <h6 class="card-subtitle mb-2 text-muted">@news.Date</h6>
                     <p class="card-text">@news.ShortDescription</p>
 

@@ -14,7 +14,7 @@
     <Content Update="wwwroot\css\site.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\images\pattern.png">
+    <Content Update="wwwroot\images\pattern11111.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\lib\twitter-bootstrap\css\bootstrap-theme.css">
