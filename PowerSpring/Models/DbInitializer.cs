@@ -13,7 +13,7 @@ namespace PowerSpring.Models
         public static void Seed(IApplicationBuilder applicationBuilder)  //DbContextOptions<AppDbContext>
         {
             //  AppDbContext context = applicationBuilder.ApplicationServices.GetRequiredService<AppDbContext>();
-
+            //test commit
             using (var serviceScope = applicationBuilder.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {

@@ -192,6 +192,8 @@ namespace PowerSpring.Migrations
 
                     b.Property<bool>("IsAdmin");
 
+                    b.Property<bool>("Muted");
+
                     b.Property<byte[]>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");

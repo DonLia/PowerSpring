@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PowerSpring.Migrations
 {
-    public partial class initial : Migration
+    public partial class initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -110,7 +110,8 @@ namespace PowerSpring.Migrations
                     Phone = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
-                    IsAdmin = table.Column<bool>(nullable: false)
+                    IsAdmin = table.Column<bool>(nullable: false),
+                    Muted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
