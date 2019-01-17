@@ -23,38 +23,31 @@ namespace PowerSpring.Controllers
             _webUserRepository = webUserRepository;
             _userManager = userManager;
         }
-
-        public IActionResult Index()
-        {
-            AdminViewModel adminViewModel = new AdminViewModel
-            {
-                webUsers = _webUserRepository.GetAllWebUsers(),
-                searchName = null
-            };
-            return View(adminViewModel);
-        }
-        [HttpPost]
+        
         public IActionResult Index(AdminViewModel adminViewModel)
         {
             if (adminViewModel.searchName == null)
             {
-                return RedirectToAction("Index", "Admin");
+                adminViewModel.webUsers = _webUserRepository.GetAllWebUsers();
+                return View(adminViewModel);
             }
+            
             adminViewModel.webUsers = Search(adminViewModel.searchName);
-            adminViewModel.searchName = null;
             return View(adminViewModel);
         }
+
         private IEnumerable<WebUser> Search(string searchName)
         {
             IEnumerable<WebUser> suspects = _webUserRepository.GetAllWebUsers().Where(p=>p.UserName.Contains(searchName));
             return (suspects);
         }
-        public IActionResult Mute(int id)
+        public IActionResult Mute(int id, string searchName)
         {
+            AdminViewModel adminViewModel = new AdminViewModel { searchName=searchName };
             var User = _webUserRepository.GetWebUserById(id);
             User.Muted = !User.Muted;
             _userManager.Update(User);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index","Admin",adminViewModel);
         }
     }
 }

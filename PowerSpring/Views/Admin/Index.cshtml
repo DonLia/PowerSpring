@@ -34,11 +34,11 @@
                     <td>
                         @if (webUser.Muted)
                         {
-                            <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightgray;width:80%" class="btn btn-sm">Muted</a>
+                            <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" asp-route-searchName="@Model.searchName" style="background-color:lightgray;width:80%" class="btn btn-sm">Muted</a>
                         }
                         else
                         {
-                            <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" style="background-color:lightblue;width:80%" class="btn btn-sm">Mute</a>
+                            <a asp-controller="Admin" asp-action="Mute" asp-route-id="@webUser.Id" asp-route-searchName="@Model.searchName" style="background-color:lightblue;width:80%" class="btn btn-sm">Mute</a>
                         }
                     </td>
                 </tr>

@@ -49,10 +49,10 @@ namespace PowerSpring.Controllers
 
             UpdateIdentity(user);
 
-            if (ReturnUrl != null)
+            if (ReturnUrl != null && ReturnUrl != "/Account/Register")
                 return Redirect(ReturnUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "HomePage");
         }
 
         //logout reviewed 1/3
