@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PowerSpring.Models.Logs;
 
 namespace PowerSpring.Models
 {
@@ -26,6 +27,7 @@ namespace PowerSpring.Models
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reply> Replies { get; set; }
         public DbSet<NewsInfo> News { get; set; }
+        public DbSet<UserLog> Logs { get; set; }
         //public DbSet<HomePage> HomePages { get; set; }
     }
 }

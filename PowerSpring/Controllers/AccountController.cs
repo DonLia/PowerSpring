@@ -12,6 +12,7 @@ using System.Security.Claims;
 using PowerSpring.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
+using PowerSpring.Models.Logs;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,9 +22,12 @@ namespace PowerSpring.Controllers
     public class AccountController : Controller
     {
         private IUserManager _userManager;
-        public AccountController(IUserManager userManager)
+        private IUserLogRepository _userLogRepository;
+
+        public AccountController(IUserManager userManager, IUserLogRepository userLogRepository)
         {
             _userManager = userManager;
+            _userLogRepository = userLogRepository;
         }
 
 
@@ -50,7 +54,12 @@ namespace PowerSpring.Controllers
             UpdateIdentity(user);
 
             if (ReturnUrl != null && ReturnUrl != "/Account/Register")
+            {
+                UserLog userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = user.Id, Action="login" };
+                _userLogRepository.CreateLog(userLog);
                 return Redirect(ReturnUrl);
+            }
+               
 
             return RedirectToAction("Index", "HomePage");
         }
@@ -60,6 +69,8 @@ namespace PowerSpring.Controllers
         {
             //wait _signInManager.SignOutAsync();
             //await httpContext.SignOutAsync();
+            UserLog userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Action = "logoff" };
+            _userLogRepository.CreateLog(userLog);
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "News");
         }
@@ -76,6 +87,7 @@ namespace PowerSpring.Controllers
         public IActionResult Update(UpdateViewModel updateViewModel)
         {
             var CurUser = _userManager.Authenticate(User.FindFirstValue(ClaimTypes.Name), updateViewModel.VerifyPassword);
+            UserLog userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)), Action = "change", Table = "WebUsers"};
             if (CurUser == null) {
                 ModelState.AddModelError("", "Your Password is incorrect. Please try again.");
                 return View(updateViewModel);
@@ -104,6 +116,9 @@ namespace PowerSpring.Controllers
                     try
                     {
                         _userManager.Update(newUser);
+                        userLog.Attribute = "UserName";
+                        userLog.Value = updateViewModel.UserName;
+                        _userLogRepository.CreateLog(userLog);
 
                     }
                     catch (Exception e)
@@ -118,16 +133,28 @@ namespace PowerSpring.Controllers
                 case "Email":
                     newUser.Email = updateViewModel.Email;
                     _userManager.Update(newUser);
+                    userLog.Attribute = "Email";
+                    userLog.Value = updateViewModel.Email;
+                    _userLogRepository.CreateLog(userLog);
                     break;
                 case "Phone":
                     newUser.Phone = updateViewModel.Phone;
                     _userManager.Update(newUser);
+                    userLog.Attribute = "Phone";
+                    userLog.Value = updateViewModel.Phone;
+                    _userLogRepository.CreateLog(userLog);
                     break;
                 case "Password":
                     if (updateViewModel.NewPassword == updateViewModel.VerifyNewPassword)
                     {
                         _userManager.Update(newUser, updateViewModel.NewPassword);
                         UpdateIdentity(newUser);
+                        userLog.Attribute = "PasswordHash";
+                        userLog.Value = newUser.PasswordHash.ToString();
+                        _userLogRepository.CreateLog(userLog);
+                        userLog.Attribute = "PasswordSalt";
+                        userLog.Value = newUser.PasswordSalt.ToString();
+                        _userLogRepository.CreateLog(userLog);
                     }
 
                     else
@@ -173,6 +200,14 @@ namespace PowerSpring.Controllers
                 if (NewUser != null)
                 {
                     UpdateIdentity(NewUser);
+                    UserLog userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = NewUser.Id, Action = "register"};
+                    _userLogRepository.CreateLog(userLog);
+                    userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = NewUser.Id, Action = "change", Table = "WebUsers", Attribute = "UserName" , Value = NewUser.UserName};
+                    _userLogRepository.CreateLog(userLog);
+                    userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = NewUser.Id, Action = "change", Table = "WebUsers", Attribute = "PasswordHash", Value = NewUser.PasswordHash.ToString() };
+                    _userLogRepository.CreateLog(userLog);
+                    userLog = new UserLog { Time = DateTime.Now.ToString(), UserId = NewUser.Id, Action = "change", Table = "WebUsers", Attribute = "PasswordSalt", Value = NewUser.PasswordSalt.ToString() };
+                    _userLogRepository.CreateLog(userLog);
                 }
             }
             catch (Exception e)

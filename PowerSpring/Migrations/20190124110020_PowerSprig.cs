@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PowerSpring.Migrations
 {
-    public partial class initialize : Migration
+    public partial class PowerSprig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,6 +36,24 @@ namespace PowerSpring.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Feedbacks", x => x.FeedbackId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Time = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    Action = table.Column<string>(nullable: true),
+                    Table = table.Column<string>(nullable: true),
+                    Attribute = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +174,9 @@ namespace PowerSpring.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Feedbacks");
+
+            migrationBuilder.DropTable(
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "News");

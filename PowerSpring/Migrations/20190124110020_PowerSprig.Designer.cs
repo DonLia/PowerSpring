@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190113052539_initialize")]
-    partial class initialize
+    [Migration("20190124110020_PowerSprig")]
+    partial class PowerSprig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,6 +119,29 @@ namespace PowerSpring.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Replies");
+                });
+
+            modelBuilder.Entity("PowerSpring.Models.Logs.UserLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action");
+
+                    b.Property<string>("Attribute");
+
+                    b.Property<string>("Table");
+
+                    b.Property<string>("Time");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("PowerSpring.Models.News.NewsInfo", b =>

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using PowerSpring.Helper;
 using PowerSpring.Models.Forum;
 using PowerSpring.Models.News;
+using PowerSpring.Models.Logs;
 
 namespace PowerSpring
 {
@@ -60,6 +61,7 @@ namespace PowerSpring
             services.AddTransient<IReplyRepository, ReplyRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IWebUserRepository, WebUserRepository>();
+            services.AddTransient<IUserLogRepository, UserLogRepository>();
             services.AddMvc();
         }
 
