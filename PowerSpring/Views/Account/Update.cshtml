@@ -1,55 +1,31 @@
-﻿@using PowerSpring.Helper
-@model UpdateViewModel
+﻿@model UpdateViewModel
 <div asp-validation-summary="All" class="text-danger"></div>
 <form asp-action="Update" method="post" class="form-horizontal" role="form">
     <div class="form-group">
         <label class="col-md-2 control-label">Please Verify your Password :</label>
         <div class="col-md-5">
-            <input required type="password" asp-for="VerifyPassword" class="form-control">
+            <input type="password" asp-for="VerifyPassword" class="form-control">
         </div>
     </div>
-    <input hidden asp-for="UpdateInfo">
-    @switch (Model.UpdateInfo)
+
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Enter your New @Model.UpdateInfo :</label>
+        <div class="col-md-5">
+            <input type="@Model.InputType" asp-for="UpdateInfoValue" class="form-control">
+        </div>
+    </div>
+    @if (Model.UpdateInfo == "Password")
     {
-        case "Password":
-            <div class="form-group">
-                <label class="col-md-2 control-label">New Password:</label>
-                <div class="col-md-5">
-                    <input required type="password" asp-for="NewPassword" class="form-control">
-                </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Please verify your new password:</label>
+            <div class="col-md-5">
+                <input type="password" asp-for="VerifyUpdateInfoValue" class="form-control">
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Repeat New Password:</label>
-                <div class="col-md-5">
-                    <input required type="password" asp-for="VerifyNewPassword" class="form-control">
-                </div>
-            </div>
-            break;
-        case "Phone":
-            <div class="form-group">
-                <label class="col-md-2 control-label">New Phone:</label>
-                <div class="col-md-5">
-                    <input required type="tel" asp-for="Phone" class="form-control">
-                </div>
-            </div>
-            break;
-        case "UserName":
-            <div class="form-group">
-                <label class="col-md-2 control-label">New UserName:</label>
-                <div class="col-md-5">
-                    <input required type="text" asp-for="UserName" class="form-control">
-                </div>
-            </div>
-            break;
-        case "Email":
-            <div class="form-group">
-                <label class="col-md-2 control-label">New Email:</label>
-                <div class="col-md-5">
-                    <input required type="text" asp-for="Email" class="form-control">
-                </div>
-            </div>
-            break;
+        </div>
+
     }
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-5">
             <input type="submit" class="btn btn-primary" value="Submit">

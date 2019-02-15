@@ -10,8 +10,8 @@ using PowerSpring.Models;
 namespace PowerSpring.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190113052539_initialize")]
-    partial class initialize
+    [Migration("20190103205220_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -193,8 +193,6 @@ namespace PowerSpring.Migrations
                     b.Property<string>("Email");
 
                     b.Property<bool>("IsAdmin");
-
-                    b.Property<bool>("Muted");
 
                     b.Property<byte[]>("PasswordHash");
 

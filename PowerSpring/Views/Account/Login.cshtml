@@ -1,20 +1,29 @@
 ﻿@model LoginViewModel
-<link href="~/css/signin.css" rel="stylesheet">
-<div class="center-block" style="min-width:350px;max-width:450px;height:50%; min-height:500px;background-color:lightcyan">
-<form method="post" class="form-horizontal form-signin" role="form">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label  class="sr-only">UserName</label>
-    <input asp-for="UserName" id="inputEmail" class="form-control" placeholder="UserName" required autofocus>
-    <label  class="sr-only">Password</label>
-    <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+
+<h2>Before contacting us, please log in or <a asp-action="Register" asp-controller="Account">register!</a></h2>
+
+<form method="post" class="form-horizontal" role="form">
+
     <div asp-validation-summary="All" class="text-danger"></div>
 
+    <div class="form-group">
+        <label asp-for="UserName" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Log in" />
+        </div>
+    </div>
 </form>
-</div>

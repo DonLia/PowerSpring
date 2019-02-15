@@ -1,7 +1,7 @@
 ﻿@model WebUser
 <h2>Hello</h2>
 <div class="tab-content profile-tab" id="myTabContent">
-    <div class="row">
+    <div class="row" >
         <div class="col-md-4">
             <label>User Name</label>
         </div>
@@ -9,41 +9,46 @@
             @Model.UserName
         </div>
         <div class="col-md-4">
-            <a asp-controller="Account" asp-action="Update" asp-route-id="UserName" class="btn btn-primary" style="width:40%">Change User Name</a>
+            <a asp-controller="Account" asp-action="Update" asp-route-id="UserName"><input type="button" class="btn btn-primary" value="Change User Name"></a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Email</label>
         </div>
-        <div class="col-md-4">
-            @Model.Email
-        </div>
-        <div class="col-md-4">
-            <a asp-controller="Account" asp-action="Update" asp-route-id="Email" style="width:40%" class="btn btn-primary">Update Email</a>
+        <div class="col-md-6">
+
+            <p>
+                @Model.Email
+                <a asp-controller="Account" asp-action="Update" asp-route-id="Email"><input type="button" class="btn btn-primary" value="Update Email"></a>
+            </p>
+
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Phone</label>
         </div>
-        <div class="col-md-4">
-            @Model.Phone
-        </div>
-        <div class="col-md-4">
-            <a asp-controller="Account" asp-action="Update" asp-route-id="Phone" style="width:40%" class="btn btn-primary">Update Phone</a>
-        </div>
+        <div class="col-md-6">
 
+            <p>
+                @Model.Phone
+                <a asp-controller="Account" asp-action="Update" asp-route-id="Phone"><input type="button" class="btn btn-primary" value="Update Phone"></a>
+            </p>
+
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Password</label>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
+
+            <p>
+                <a asp-controller="Account" asp-action="Update" asp-route-id="Password"><input type="button" class="btn btn-primary" value="Change Password"></a>
+            </p>
 
         </div>
-        <div class="col-md-4">
-            <a asp-controller="Account" asp-action="Update" asp-route-id="Password" style="width:40%" class="btn btn-primary">Change Password</a>
-        </div>
     </div>
+
 </div>
